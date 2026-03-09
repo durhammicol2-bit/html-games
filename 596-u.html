@@ -25,140 +25,70 @@
       height: 100%;
       border: none;
     }
-    .overlay {
+    
+    .loading-container {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      backdrop-filter: blur(3px);
-    }
-
-    .popup {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      max-width: 500px;
-      width: 90%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
       text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-
-    .popup h2 {
-      margin-top: 0;
-      font-size: 20px;
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
     }
-
-    .popup p {
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
       color: #333;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 16px;
+      margin: 0 0 5px 0;
+      font-weight: 600;
     }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 18px;
-      background: #0b5fff;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      cursor: pointer;
+    
+    .loading-warning {
+      color: #666;
+      font-size: 13px;
+      margin: 0;
     }
-
-    button:hover {
-      background: #004ae6;
-    }
-  #sidebarad1,
-#sidebarad2 {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 160px;
-  height: 600px;
-  padding: 0;
-  margin: 0;
-  z-index: 999999;
-}
-#sidebarad1 {
-  left: 0;
-}
-#sidebarad2 {
-  right: 0;
-}
-.sidebar-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 10;
-}
-.sidebar-frame {
-  width: 160px;
-  height: 600px;
-  border: none;
-  display: block;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
+  </style>
 </head>
 <body>
 
-  <div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4">
-    <div id="loadingSpinner" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;text-align:center;">
-      <div style="width:50px;height:50px;border:5px solid #f3f3f3;border-top:5px solid #3498db;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px;"></div>
-      <p style="color:#666;font-size:14px;margin:0;font-family:system-ui,sans-serif;">Loading comments...</p>
-      <p style="color:#999;font-size:12px;margin:5px 0 0;font-family:system-ui,sans-serif;">⚠️ May be laggy on first load</p>
-    </div>
-    <p style="padding:0;margin:0">
-      <iframe src="https://padlet.com/embed/pwj8x8cqy4ohruh4" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0" onload="document.getElementById('loadingSpinner').style.display='none'"></iframe>
-    </p>
-    <div style="display:flex;align-items:center;justify-content:end;margin:0;padding:8px 8px 8px 0">
-      <a href="https://padlet.com?ref=embed" style="display:flex;align-items:center;gap:5px;flex-grow:0;margin:0;border:none;padding:0;text-decoration:none" target="_blank">
-        <span aria-hidden style="color:#9E9E9E;font-size:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1">Made with</span>
-        <img src="https://padlet.net/emails/padlet_email_logo_2026_text-dark-200.png" height="12" style="padding:0;margin:0;background:0 0;border:none;box-shadow:none;display:block" alt="Made with Padlet">
-      </a>
-    </div>
+  <div class="loading-container" id="loadingContainer">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading comments...</p>
+    <p class="loading-warning">⚠️ May be laggy on first load</p>
   </div>
 
-  <div id="overlay" class="overlay">
-    <div class="popup">
-      <h2>Warning!</h2>
-      <p>
-        There might be some nasty pictures in the comments<br>
-        There is moderation but its automated one so be careful<br><br>
-        Click <strong>OK</strong> to continue.
-      </p>
-      <button id="okBtn">OK</button>
-    </div>
-  </div>
+  <iframe 
+    src="https://padlet.com/embed/pwj8x8cqy4ohruh4" 
+    frameborder="0" 
+    allow="camera;microphone;geolocation;display-capture;clipboard-write" 
+    style="width:100%;height:100%;display:block;padding:0;margin:0"
+    onload="document.getElementById('loadingContainer').style.display='none'">
+  </iframe>
 
-  <script>
-    const overlay = document.getElementById('overlay');
-    const okBtn = document.getElementById('okBtn');
-    okBtn.addEventListener('click', () => {
-      overlay.style.display = 'none';
-    });
-  </script>
-<div id="sidebarad1">
-  <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
-</div>
-<div id="sidebarad2">
-  <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
-</div>
+  <div id="sidebarad1">
+    <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
+  </div>
+  <div id="sidebarad2">
+    <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
+  </div>
 </body>
 </html>
