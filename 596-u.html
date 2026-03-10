@@ -8,74 +8,232 @@
       height: 100%;
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: #000;
+      background: #1a1a1a;
+      color: #fff;
     }
 
-    iframe {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
+    .comments-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
     }
-    
-    .loading-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1000;
+
+    .comments-header {
       text-align: center;
-      background: rgba(255,255,255,0.95);
-      padding: 30px;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-    
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 15px;
+
+    .comments-header h1 {
+      margin: 0 0 10px 0;
+      font-size: 2rem;
     }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+
+    .comment-form {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
-    
-    .loading-text {
-      color: #333;
+
+    .comment-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 10px;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
       font-size: 16px;
-      margin: 0 0 5px 0;
       font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    
-    .loading-warning {
-      color: #666;
-      font-size: 13px;
-      margin: 0;
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .comments-list {
+      margin-top: 20px;
+    }
+
+    .comment {
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .comment-author {
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+
+    .comment-time {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .comment-text {
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .no-comments {
+      text-align: center;
+      color: #888;
+      padding: 40px;
+      font-style: italic;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(102, 126, 234, 0.9);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: rgba(102, 126, 234, 1);
     }
   </style>
 </head>
 <body>
 
-  <div class="loading-container" id="loadingContainer">
-    <div class="spinner"></div>
-    <p class="loading-text">Loading comments...</p>
-    <p class="loading-warning">⚠️ May be laggy on first load</p>
+  <a href="javascript:history.back()" class="back-btn">← Back to Games</a>
+
+  <div class="comments-container">
+    <div class="comments-header">
+      <h1>💬 Game Comments</h1>
+      <p>Share your thoughts and feedback!</p>
+    </div>
+
+    <div class="comment-form">
+      <input type="text" class="name-input" id="nameInput" placeholder="Your name (optional)" maxlength="50">
+      <textarea class="comment-input" id="commentInput" placeholder="Write your comment here..." maxlength="500"></textarea>
+      <button class="submit-btn" onclick="addComment()">Post Comment</button>
+    </div>
+
+    <div class="comments-list" id="commentsList">
+      <div class="no-comments">No comments yet. Be the first to comment!</div>
+    </div>
   </div>
 
-  <iframe 
-    src="https://padlet.com/embed/pwj8x8cqy4ohruh4" 
-    frameborder="0" 
-    allow="camera;microphone;geolocation;display-capture;clipboard-write" 
-    style="width:100%;height:100%;display:block;padding:0;margin:0"
-    onload="document.getElementById('loadingContainer').style.display='none'">
-  </iframe>
+  <script>
+    // Load comments from localStorage
+    let comments = JSON.parse(localStorage.getItem('gameComments') || '[]');
+    
+    function displayComments() {
+      const commentsList = document.getElementById('commentsList');
+      
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+        return;
+      }
+      
+      commentsList.innerHTML = comments
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .map(comment => `
+          <div class="comment">
+            <div class="comment-author">${comment.name || 'Anonymous'}</div>
+            <div class="comment-time">${new Date(comment.timestamp).toLocaleString()}</div>
+            <div class="comment-text">${comment.text}</div>
+          </div>
+        `).join('');
+    }
+    
+    function addComment() {
+      const nameInput = document.getElementById('nameInput');
+      const commentInput = document.getElementById('commentInput');
+      
+      const text = commentInput.value.trim();
+      if (!text) {
+        alert('Please write a comment before posting.');
+        return;
+      }
+      
+      const comment = {
+        name: nameInput.value.trim() || 'Anonymous',
+        text: text,
+        timestamp: Date.now()
+      };
+      
+      comments.push(comment);
+      localStorage.setItem('gameComments', JSON.stringify(comments));
+      
+      // Clear form
+      commentInput.value = '';
+      nameInput.value = '';
+      
+      // Refresh display
+      displayComments();
+    }
+    
+    // Handle Enter key in comment textarea
+    document.getElementById('commentInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        addComment();
+      }
+    });
+    
+    // Display comments on load
+    displayComments();
+  </script>
 
 </body>
 </html>
