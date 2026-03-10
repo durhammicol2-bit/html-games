@@ -1,239 +1,187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: #1a1a1a;
-      color: #fff;
-    }
-
-    .comments-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      height: 100vh;
-      overflow-y: auto;
-    }
-
-    .comments-header {
-      text-align: center;
-      margin-bottom: 30px;
-      padding: 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .comments-header h1 {
-      margin: 0 0 10px 0;
-      font-size: 2rem;
-    }
-
-    .comment-form {
-      background: #2a2a2a;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .comment-input {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #444;
-      border-radius: 8px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 10px;
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .comment-input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
-    }
-
-    .name-input {
-      width: 100%;
-      padding: 10px;
-      border: 2px solid #444;
-      border-radius: 8px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .submit-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .comments-list {
-      margin-top: 20px;
-    }
-
-    .comment {
-      background: #2a2a2a;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .comment-author {
-      font-weight: bold;
-      color: #667eea;
-      margin-bottom: 5px;
-    }
-
-    .comment-time {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 10px;
-    }
-
-    .comment-text {
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
-
-    .no-comments {
-      text-align: center;
-      color: #888;
-      padding: 40px;
-      font-style: italic;
-    }
-
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(102, 126, 234, 0.9);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 14px;
-      z-index: 1000;
-      transition: background 0.3s;
-    }
-
-    .back-btn:hover {
-      background: rgba(102, 126, 234, 1);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .comment-box {
+            background: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+        .comment-form {
+            background: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            background: #1a1a1a;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        .no-comments {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-
-  <a href="javascript:history.back()" class="back-btn">← Back to Games</a>
-
-  <div class="comments-container">
-    <div class="comments-header">
-      <h1>💬 Game Comments</h1>
-      <p>Share your thoughts and feedback!</p>
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link">← Back to Games</a>
+        
+        <h2>Game Comments</h2>
+        
+        <div class="comment-form">
+            <input type="text" id="name" placeholder="Name (optional)" maxlength="30">
+            <textarea id="comment" placeholder="Write your comment..." rows="3" maxlength="200"></textarea>
+            <button onclick="addComment()">Post Comment</button>
+        </div>
+        
+        <div id="comments">
+            <div class="no-comments">No comments yet. Be the first!</div>
+        </div>
     </div>
 
-    <div class="comment-form">
-      <input type="text" class="name-input" id="nameInput" placeholder="Your name (optional)" maxlength="50">
-      <textarea class="comment-input" id="commentInput" placeholder="Write your comment here..." maxlength="500"></textarea>
-      <button class="submit-btn" onclick="addComment()">Post Comment</button>
-    </div>
-
-    <div class="comments-list" id="commentsList">
-      <div class="no-comments">No comments yet. Be the first to comment!</div>
-    </div>
-  </div>
-
-  <script>
-    // Load comments from localStorage
-    let comments = JSON.parse(localStorage.getItem('gameComments') || '[]');
-    
-    function displayComments() {
-      const commentsList = document.getElementById('commentsList');
-      
-      if (comments.length === 0) {
-        commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
-        return;
-      }
-      
-      commentsList.innerHTML = comments
-        .sort((a, b) => b.timestamp - a.timestamp)
-        .map(comment => `
-          <div class="comment">
-            <div class="comment-author">${comment.name || 'Anonymous'}</div>
-            <div class="comment-time">${new Date(comment.timestamp).toLocaleString()}</div>
-            <div class="comment-text">${comment.text}</div>
-          </div>
-        `).join('');
-    }
-    
-    function addComment() {
-      const nameInput = document.getElementById('nameInput');
-      const commentInput = document.getElementById('commentInput');
-      
-      const text = commentInput.value.trim();
-      if (!text) {
-        alert('Please write a comment before posting.');
-        return;
-      }
-      
-      const comment = {
-        name: nameInput.value.trim() || 'Anonymous',
-        text: text,
-        timestamp: Date.now()
-      };
-      
-      comments.push(comment);
-      localStorage.setItem('gameComments', JSON.stringify(comments));
-      
-      // Clear form
-      commentInput.value = '';
-      nameInput.value = '';
-      
-      // Refresh display
-      displayComments();
-    }
-    
-    // Handle Enter key in comment textarea
-    document.getElementById('commentInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        addComment();
-      }
-    });
-    
-    // Display comments on load
-    displayComments();
-  </script>
-
+    <script>
+        // Simple, crash-proof comments system
+        function addComment() {
+            try {
+                var name = document.getElementById('name').value || 'Anonymous';
+                var comment = document.getElementById('comment').value.trim();
+                
+                if (!comment) {
+                    alert('Please write a comment');
+                    return;
+                }
+                
+                // Get existing comments
+                var comments = [];
+                try {
+                    var saved = localStorage.getItem('simpleComments');
+                    if (saved) {
+                        comments = JSON.parse(saved);
+                    }
+                } catch (e) {
+                    // If localStorage fails, just continue
+                }
+                
+                // Add new comment
+                comments.push({
+                    name: name,
+                    text: comment,
+                    time: new Date().toLocaleString()
+                });
+                
+                // Keep only last 20 comments
+                if (comments.length > 20) {
+                    comments = comments.slice(-20);
+                }
+                
+                // Save comments
+                try {
+                    localStorage.setItem('simpleComments', JSON.stringify(comments));
+                } catch (e) {
+                    // If localStorage fails, just continue
+                }
+                
+                // Clear form
+                document.getElementById('name').value = '';
+                document.getElementById('comment').value = '';
+                
+                // Refresh display
+                showComments();
+                
+            } catch (e) {
+                alert('Error posting comment');
+            }
+        }
+        
+        function showComments() {
+            try {
+                var commentsDiv = document.getElementById('comments');
+                var comments = [];
+                
+                try {
+                    var saved = localStorage.getItem('simpleComments');
+                    if (saved) {
+                        comments = JSON.parse(saved);
+                    }
+                } catch (e) {
+                    // If localStorage fails, show no comments
+                }
+                
+                if (comments.length === 0) {
+                    commentsDiv.innerHTML = '<div class="no-comments">No comments yet. Be the first!</div>';
+                    return;
+                }
+                
+                var html = '';
+                for (var i = comments.length - 1; i >= 0; i--) {
+                    var comment = comments[i];
+                    html += '<div class="comment-box">';
+                    html += '<strong>' + comment.name + '</strong> - ' + comment.time + '<br>';
+                    html += comment.text;
+                    html += '</div>';
+                }
+                
+                commentsDiv.innerHTML = html;
+                
+            } catch (e) {
+                document.getElementById('comments').innerHTML = '<div class="no-comments">Error loading comments</div>';
+            }
+        }
+        
+        // Load comments when page loads
+        showComments();
+        
+        // Allow Enter key to submit (but not Shift+Enter)
+        document.getElementById('comment').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                addComment();
+            }
+        });
+    </script>
 </body>
 </html>
