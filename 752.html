@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaultCord Chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #36393f;
+            color: #dcddde;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* GUILD/SERVER SIDEBAR */
+        .guild-bar {
+            width: 72px;
+            background: #202225;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            border-right: 1px solid #000;
+            overflow-y: auto;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .guild-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .guild-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #36393f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            font-weight: 600;
+            color: #dcddde;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .guild-item:hover {
+            background: #667eea;
+            border-radius: 25%;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .guild-item.active {
+            background: #667eea;
+            border-radius: 25%;
+            border-color: #fff;
+            box-shadow: 0 0 0 2px #202225, 0 0 0 4px #667eea;
+        }
+
+        .guild-item.home {
+            background: linear-gradient(135deg, #7289da, #667eea);
+            position: relative;
+        }
+
+        .guild-item.home:hover {
+            background: linear-gradient(135deg, #5a6eb8, #5568d3);
+        }
+
+        .guild-item.home.active {
+            background: linear-gradient(135deg, #667eea, #5568d3);
+        }
+
+        /* Discord-like Guild Separator */
+        .guild-separator {
+            width: 32px;
+            height: 2px;
+            background: #72867d !important;
+            margin: 8px 20px;
+            border-radius: 4px;
+            opacity: 1 !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .guild-add {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #2f3136;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #43b581;
+            font-size: 24px;
+            font-weight: 300;
+            border: 2px solid transparent;
+        }
+
+        .guild-add:hover {
+            background: #43b581;
+            color: #fff;
+            border-radius: 25%;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(67, 181, 129, 0.4);
+        }
+
+        /* Server tooltips */
+        .guild-item[data-tooltip]:hover::after,
+        .guild-add[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #18191c;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            animation: tooltipFadeIn 0.2s ease forwards;
+        }
+
+        @keyframes tooltipFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* AUTH PAGES */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .auth-box {
+            background: #2f3136;
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-box h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #202225;
+            border-radius: 5px;
+            background: #40444b;
+            color: #dcddde;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #36393f;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-link a {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #f04747;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .success {
+            color: #43b581;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* CHAT INTERFACE */
+        .chat-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .chat-layout {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #2f3136;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #202225;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid #202225;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .channels-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .channel-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .channel-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .channel-delete {
+            background: none;
+            border: none;
+            color: #72767d;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            display: none;
+        }
+
+        .channel-item:hover .channel-delete {
+            display: block;
+            color: #f04747;
+        }
+
+        .user-panel {
+            padding: 16px 16px 16px 0;
+            background: #292b2f;
+            border-top: 1px solid #202225;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            margin-left: -72px;
+            padding-left: 16px;
+            position: relative;
+            z-index: 15;
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .username {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-meta {
+            margin-top: 4px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .user-meta span {
+            font-size: 11px;
+            color: #fff;
+        }
+
+        .status {
+            font-size: 12px;
+            color: #72767d;
+        }
+
+        .status.online {
+            color: #43b581;
+            font-weight: 600;
+        }
+
+        .status.offline {
+            color: #f04747;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #72767d;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+        }
+
+        .logout-btn:hover {
+            color: #dcddde;
+        }
+
+        /* MAIN CHAT AREA */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #36393f;
+        }
+
+        .chat-header {
+            padding: 16px;
+            border-bottom: 1px solid #202225;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .message-author {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #72767d;
+        }
+
+        .message-text {
+            color: #dcddde;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .input-area {
+            padding: 16px;
+            border-top: 1px solid #202225;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            background: #40444b;
+            border: 1px solid #202225;
+            border-radius: 20px;
+            padding: 12px 16px;
+            color: #dcddde;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            max-height: 100px;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #36393f;
+        }
+
+        .send-btn {
+            background: #667eea;
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #5568d3;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* PROFILE MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #36393f;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            padding: 24px;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #72767d;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #dcddde;
+        }
+
+        .profile-display {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 32px;
+            color: #fff;
+            margin: 0 auto 16px;
+        }
+
+        .profile-username {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: #72767d;
+        }
+
+        /* MEMBER LIST */
+        .member-list {
+            width: 240px;
+            background: #2f3136;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #202225;
+            overflow: hidden;
+        }
+
+        .member-list-header {
+            padding: 16px;
+            border-bottom: 1px solid #202225;
+            font-weight: 600;
+            font-size: 14px;
+            color: #72767d;
+        }
+
+        .member-list-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .member-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .member-item:hover {
+            background: #36393f;
+        }
+
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .member-name {
+            flex: 1;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .member-status.online {
+            background: #43b581;
+        }
+
+        .member-status.offline {
+            background: #f04747; /* red for offline */
+            box-shadow: 0 0 6px rgba(240,71,71,0.15);
+        }
+
+        /* Member profile popup card */
+        .member-card {
+            position: absolute;
+            background: #2f3136;
+            color: #dcddde;
+            border: 1px solid #202225;
+            padding: 12px;
+            border-radius: 8px;
+            width: 240px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            z-index: 1200;
+            display: none;
+        }
+
+        .member-card.active { display: block; }
+
+        .member-card .mc-header { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+        .member-card .mc-avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; }
+        .member-card .mc-row { font-size:13px; color:#bfbfbf; margin-bottom:6px; }
+
+        @media (max-width: 768px) {
+            .guild-bar {
+                width: 60px;
+            }
+            
+            .guild-item, .guild-add {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+
+            .sidebar, .member-list {
+                width: 200px;
+            }
+
+            .sidebar-header, .member-list-header {
+                font-size: 13px;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .member-list {
+                display: none;
+            }
+
+            .sidebar {
+                width: 180px;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4"></script>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="auth-container">
+        <div class="auth-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                    <div id="loginEmailError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                    <div id="loginPasswordError" class="error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div id="loginError" class="error"></div>
+            </form>
+            <div class="auth-link">
+                Don't have an account? <a onclick="showSignup()">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE -->
+    <div id="signupPage" class="auth-container hidden">
+        <div class="auth-box">
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" required>
+                    <div id="signupUsernameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                    <div id="signupEmailError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                    <div id="signupPasswordError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPasswordConfirm">Confirm Password</label>
+                    <input type="password" id="signupPasswordConfirm" required>
+                    <div id="signupPasswordConfirmError" class="error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <div id="signupError" class="error"></div>
+            </form>
+            <div class="auth-link">
+                Already have an account? <a onclick="showLogin()">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAT PAGE -->
+    <div id="chatPage" class="hidden">
+        <div class="chat-container">
+            <!-- GUILD/SERVER LIST -->
+            <div class="guild-bar">
+                <div class="guild-item home active" data-tooltip="Direct Messages" title="Direct Messages">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                    </svg>
+                </div>
+                <div class="guild-separator"></div>
+                <div class="guild-item" style="background: #5865F2;" data-tooltip="VaultCord" title="VaultCord">
+                    V
+                </div>
+                <div class="guild-item" style="background: #57F287;" data-tooltip="Gaming Hub" title="Gaming Hub">
+                    G
+                </div>
+                <div class="guild-item" style="background: #ED4245;" data-tooltip="Coding Zone" title="Coding Zone">
+                    C
+                </div>
+                <div class="guild-item" style="background: #FEE75C; color: #2f3136;" data-tooltip="Art & Design" title="Art & Design">
+                    A
+                </div>
+                <div class="guild-separator"></div>
+                <div class="guild-add" data-tooltip="Add Server" title="Add Server">
+                    +
+                </div>
+            </div>
+            
+            <div class="chat-layout">
+                <!-- SIDEBAR -->
+                <div class="sidebar">
+                    <div class="sidebar-header" id="serverName">VaultCord</div>
+                    <div class="channels-list" id="channelsList">
+                        <div style="padding: 8px 16px; color: #72767d; font-size: 12px;">Loading channels...</div>
+                    </div>
+                    <div class="user-panel" onclick="showProfile()">
+                        <div class="profile-avatar" id="userAvatarSmall"></div>
+                        <div class="user-info">
+                            <div style="display:flex;align-items:center;gap:6px;">
+                                <div class="username" id="usernameSidebar"></div>
+                                <div id="sidebarAdmin"></div>
+                            </div>
+                            <div class="user-meta"><span id="sidebarTag"></span></div>
+                            <div class="status" id="sidebarStatus">Online</div>
+                        </div>
+                        <button class="logout-btn" onclick="openUserSettings(event)">⚙️</button>
+                    </div>
+                </div>
+
+                <!-- MAIN CONTENT -->
+                <div class="main-content">
+                    <div class="chat-header">
+                        <h3 id="channelName"># general</h3>
+                    </div>
+
+                    <div class="messages-area" id="messagesArea">
+                        <div class="empty-state">
+                            <p>No messages yet. Start the conversation!</p>
+                        </div>
+                    </div>
+
+                    <div class="input-area">
+                        <div class="input-wrapper">
+                            <textarea class="message-input" id="messageInput" placeholder="Type a message..." rows="1"></textarea>
+                            <button class="send-btn" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEMBER LIST -->
+                <div class="member-list">
+                    <div class="member-list-header">Members</div>
+                    <div class="member-list-items" id="memberList">
+                        <div style="padding: 16px; color: #72767d; font-size: 12px;">Loading members...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE CHANNEL MODAL -->
+    <div id="createChannelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Channel</h2>
+                <button class="close-btn" onclick="closeCreateChannelModal()">&times;</button>
+            </div>
+            <form id="createChannelForm">
+                <div class="form-group">
+                    <label for="channelName">Channel Name</label>
+                    <input type="text" id="channelName" placeholder="e.g. announcements" required>
+                    <div id="channelError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="channelDesc">Description (optional)</label>
+                    <input type="text" id="channelDesc" placeholder="What's this channel about?">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>User Profile</h2>
+                <button class="close-btn" onclick="closeProfile()">&times;</button>
+            </div>
+            <div class="profile-display">
+                <div class="profile-avatar-large" id="profileAvatarLarge"></div>
+                <div class="profile-username" id="profileUsername" style="display: flex; align-items: center; justify-content: center; gap: 8px;"></div>
+                <div class="profile-email" id="profileEmail"></div>
+                <div id="adminBadge" style="margin-top: 10px;"></div>
+                <div id="userTag" style="margin-top: 8px;"></div>
+            </div>
+            <button class="btn btn-primary" onclick="logout()">Logout</button>
+            <button id="devPanelBtn" class="btn" style="background: #764ba2; margin-top: 10px; display: none;" onclick="window.open('/dev-panel.html', '_blank')">Dev Panel</button>
+        </div>
+    </div>
+
+    <!-- USER SETTINGS MODAL -->
+    <div id="userSettingsModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>User Settings</h2>
+                <button class="close-btn" onclick="closeUserSettings()">&times;</button>
+            </div>
+            
+            <!-- Profile Section -->
+            <div class="settings-section">
+                <h3>Profile Information</h3>
+                <div class="profile-display">
+                    <div class="profile-avatar-large" id="settingsAvatarLarge"></div>
+                    <div class="profile-username" id="settingsUsername" style="display: flex; align-items: center; justify-content: center; gap: 8px;"></div>
+                    <div class="profile-email" id="settingsEmail"></div>
+                    <div id="settingsAdminBadge" style="margin-top: 10px;"></div>
+                    <div id="settingsUserTag" style="margin-top: 8px;"></div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="settings-section">
+                <h3>Settings</h3>
+                <div class="form-group">
+                    <label for="settingsDisplayName">Display Name</label>
+                    <input type="text" id="settingsDisplayName" placeholder="Enter your display name">
+                </div>
+                <div class="form-group">
+                    <label for="settingsDescription">Description</label>
+                    <textarea id="settingsDescription" placeholder="Tell us about yourself..." rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="settingsStatusMessage">Status Message</label>
+                    <input type="text" id="settingsStatusMessage" placeholder="What's on your mind?">
+                </div>
+                <div class="form-group">
+                    <label for="settingsTheme">Theme</label>
+                    <select id="settingsTheme" class="form-control">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="settingsNotifications"> Enable Notifications
+                    </label>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="settings-actions">
+                <button class="btn btn-primary" onclick="saveUserSettings()">Save Changes</button>
+                <button class="btn" style="background: #f04747;" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="userPanelOverlay" class="user-panel-overlay"></div>
+
+    <script>
+        // Supabase Configuration - REPLACE WITH YOUR VALUES
+        const SUPABASE_URL = 'https://pwtjgkkxdnmksmvkcjyh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3dGpna2t4ZG5ta3NtdmtjanloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwMTMzMzIsImV4cCI6MjA4NjU4OTMzMn0.hLIJyVQK6s_L3zYWKEeeegf9FsQBUDv0K4t4DiPh1Qs';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUser = null;
+        let currentChannel = null;
+        let messageUnsubscribe = null;
+        let onlineUsers = new Map(); // Track online users with timestamps
+        let memberListInterval = null;
+        let channels = []; // Store channels from database
+        let userRole = 'user'; // Track user's role (user or admin)
+        let currentServer = 'home'; // Track current server
+
+        // Initialize
+        window.addEventListener('load', () => {
+            checkAuth();
+            setupAutoResize();
+        });
+
+        // AUTH FUNCTIONS
+        async function checkAuth() {
+            const { data: { user }, error } = await supabase.auth.getUser();
+            if (error) console.error('Auth check error:', error);
+            if (user) {
+                console.log('User authenticated:', user.email);
+                currentUser = user;
+                markUserOnline(user.email);
+                await loadUserProfile();
+                await loadChannels();
+                showChat();
+                startMemberListUpdates();
+            } else {
+                showLogin();
+            }
+        }
+
+        async function loadUserProfile() {
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                if (error) {
+                    console.error('Error loading profile:', error);
+                    // Create a default profile if it doesn't exist
+                    currentUser.profile = {
+                        username: currentUser.email.split('@')[0],
+                        avatar_color: getRandomColor()
+                    };
+                } else if (data) {
+                    console.log('Profile loaded:', data);
+                    currentUser.profile = data;
+                    updateUI();
+                }
+
+                // Load user's role
+                const { data: roleData } = await supabase
+                    .from('user_roles')
+                    .select('role')
+                    .eq('user_id', currentUser.id)
+                    .single();
+
+                userRole = roleData?.role || 'user';
+                console.log('User role:', userRole);
+                updateChannelUI();
+            } catch (err) {
+                console.error('Profile loading exception:', err);
+            }
+        }
+
+        async function updateUI() {
+            const avatar = generateAvatar(currentUser.profile?.username || currentUser.email);
+            document.getElementById('userAvatarSmall').textContent = avatar.letter;
+            document.getElementById('userAvatarSmall').style.backgroundColor = avatar.color;
+            document.getElementById('usernameSidebar').textContent = currentUser.profile?.username || currentUser.email;
+            
+            document.getElementById('profileAvatarLarge').textContent = avatar.letter;
+            document.getElementById('profileAvatarLarge').style.backgroundColor = avatar.color;
+            
+            // Update profile username with admin indicator
+            const usernameEl = document.getElementById('profileUsername');
+            usernameEl.textContent = currentUser.profile?.username || 'User';
+            if (userRole === 'admin') {
+                const adminSpan = document.createElement('span');
+                adminSpan.textContent = '👑';
+                adminSpan.style.color = '#f04747';
+                usernameEl.appendChild(adminSpan);
+            }
+            
+            document.getElementById('profileEmail').textContent = currentUser.email;
+
+            // Load and display user tag
+            try {
+                const { data: userTag } = await supabase
+                    .from('user_tags')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .single();
+
+                const tagEl = document.getElementById('userTag');
+                if (userTag && tagEl) {
+                    const tagColor = `rgb(${userTag.tag_color_r}, ${userTag.tag_color_g}, ${userTag.tag_color_b})`;
+                    tagEl.innerHTML = `<span style="background: ${tagColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: 8px;">${escapeHtml(userTag.tag_text)}</span>`;
+                } else if (tagEl) {
+                    tagEl.innerHTML = '';
+                }
+
+                // Also update sidebar small tag
+                const sidebarTagEl = document.getElementById('sidebarTag');
+                if (sidebarTagEl) {
+                    if (userTag) {
+                        const tagColor = `rgb(${userTag.tag_color_r}, ${userTag.tag_color_g}, ${userTag.tag_color_b})`;
+                        sidebarTagEl.innerHTML = `<span style="background: ${tagColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600;">${escapeHtml(userTag.tag_text)}</span>`;
+                    } else {
+                        sidebarTagEl.innerHTML = '';
+                    }
+                }
+            } catch (error) {
+                console.log('No tag found for user');
+            }
+
+            // Show admin badge if admin
+            const adminBadge = document.getElementById('adminBadge');
+            if (userRole === 'admin') {
+                adminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">👑 ADMIN</span>';
+                document.getElementById('devPanelBtn').style.display = 'block';
+            }
+
+            // Update sidebar admin crown and status
+            const sidebarAdmin = document.getElementById('sidebarAdmin');
+            const sidebarStatus = document.getElementById('sidebarStatus');
+            const usernameSidebar = document.getElementById('usernameSidebar');
+            if (sidebarAdmin) sidebarAdmin.innerHTML = userRole === 'admin' ? '<span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+            if (sidebarStatus) {
+                sidebarStatus.textContent = 'Online';
+                sidebarStatus.className = 'status online';
+            }
+            if (usernameSidebar) {
+                // ensure username text is correct (clears previous child nodes)
+                usernameSidebar.textContent = currentUser.profile?.username || currentUser.email;
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            // Clear previous errors
+            document.getElementById('loginError').textContent = '';
+
+            try {
+                console.log('Attempting login with:', email);
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+                if (error) {
+                    console.error('Login error:', error);
+                    document.getElementById('loginError').textContent = error.message;
+                } else {
+                    console.log('Login successful');
+                    currentUser = data.user;
+                    markUserOnline(email);
+                    await loadUserProfile();
+                    await loadChannels();
+                    showChat();
+                    startMemberListUpdates();
+                }
+            } catch (err) {
+                console.error('Login exception:', err);
+                document.getElementById('loginError').textContent = 'An unexpected error occurred';
+            }
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+            // Clear previous errors
+            document.getElementById('signupError').textContent = '';
+
+            if (password !== passwordConfirm) {
+                document.getElementById('signupPasswordConfirmError').textContent = 'Passwords do not match';
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signUp({ email, password });
+
+            if (error) {
+                document.getElementById('signupError').textContent = error.message;
+            } else {
+                currentUser = data.user;
+                markUserOnline(email);
+                const { error: profileError } = await supabase.from('profiles').insert({
+                    id: currentUser.id,
+                    username: username,
+                    email: email,
+                    avatar_color: getRandomColor()
+                });
+
+                if (profileError) {
+                    document.getElementById('signupError').textContent = profileError.message;
+                } else {
+                    await loadUserProfile();
+                    await loadChannels();
+                    showChat();
+                    startMemberListUpdates();
+                }
+            }
+        });
+
+        // CHANNEL FUNCTIONS
+        async function loadChannels() {
+            const { data, error } = await supabase
+                .from('channels')
+                .select('*')
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                console.error('Error loading channels:', error);
+                return;
+            }
+
+            channels = data || [];
+            renderChannels();
+            
+            // Select first channel if none selected
+            if (!currentChannel && channels.length > 0) {
+                currentChannel = channels[0].name;
+                loadMessages();
+            }
+        }
+
+        function renderChannels() {
+            const channelsList = document.getElementById('channelsList');
+            if (channels.length === 0) {
+                channelsList.innerHTML = '<div style="padding: 8px 16px; color: #72767d; font-size: 12px;">No channels</div>';
+                return;
+            }
+
+            channelsList.innerHTML = channels.map(ch => `
+                <div class="channel-item ${currentChannel === ch.name ? 'active' : ''}" onclick="selectChannel('${ch.name}')">
+                    <div class="channel-name">
+                        <span class="channel-hashtag">#</span>
+                        <span>${ch.name}</span>
+                    </div>
+                    ${userRole === 'admin' ? `<button class="channel-delete" onclick="deleteChannel('${ch.id}', event)">×</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateChannelUI() {
+            // Show/hide create channel button based on role
+            const createBtn = document.querySelector('button[onclick="showCreateChannelModal()"]');
+            if (createBtn) {
+                createBtn.style.display = userRole === 'admin' ? 'block' : 'none';
+            }
+        }
+
+        function selectChannel(channelName) {
+            currentChannel = channelName;
+            renderChannels();
+            document.getElementById('channelName').textContent = `# ${channelName}`;
+            loadMessages();
+        }
+
+        function showCreateChannelModal() {
+            document.getElementById('createChannelModal').classList.add('active');
+        }
+
+        function closeCreateChannelModal() {
+            document.getElementById('createChannelModal').classList.remove('active');
+            document.getElementById('createChannelForm').reset();
+            document.getElementById('channelError').textContent = '';
+        }
+
+        async function deleteChannel(channelId, event) {
+            event.stopPropagation();
+            if (!confirm('Delete this channel?')) return;
+
+            const { error } = await supabase
+                .from('channels')
+                .delete()
+                .eq('id', channelId);
+
+            if (error) {
+                console.error('Error deleting channel:', error);
+                alert('Failed to delete channel');
+            } else {
+                await loadChannels();
+                if (currentChannel === channels.find(c => c.id === channelId)?.name) {
+                    currentChannel = channels.length > 0 ? channels[0].name : null;
+                    if (currentChannel) loadMessages();
+                }
+            }
+        }
+
+        document.getElementById('createChannelForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('channelName').value;
+            const description = document.getElementById('channelDesc').value;
+            document.getElementById('channelError').textContent = '';
+
+            if (userRole !== 'admin') {
+                document.getElementById('channelError').textContent = 'Only admins can create channels';
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('channels')
+                .insert({
+                    name: name.toLowerCase(),
+                    description: description || null,
+                    created_by: currentUser.id
+                });
+
+            if (error) {
+                console.error('Error creating channel:', error);
+                document.getElementById('channelError').textContent = error.message;
+            } else {
+                closeCreateChannelModal();
+                await loadChannels();
+            }
+        });
+
+        // CHAT FUNCTIONS
+
+        async function loadMessages() {
+            if (messageUnsubscribe) {
+                await messageUnsubscribe.unsubscribe();
+            }
+
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('channel', currentChannel)
+                .order('created_at', { ascending: true });
+
+            if (error) console.error('Error loading messages:', error);
+            else {
+                displayMessages(data);
+            }
+
+            // Subscribe to real-time updates
+            messageUnsubscribe = supabase
+                .channel(`messages:${currentChannel}`)
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `channel=eq.${currentChannel}` }, (payload) => {
+                    // new messages still appended individually
+                    appendMessage(payload.new);
+                })
+                .subscribe();
+        }
+
+        // Render all messages at once using bulk-fetched tags/roles for performance
+        async function displayMessages(messages) {
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.innerHTML = '';
+
+            if (!messages || messages.length === 0) {
+                messagesArea.innerHTML = '<div class="empty-state"><p>No messages yet. Start the conversation!</p></div>';
+                return;
+            }
+
+            // Collect unique user IDs from messages
+            const userIds = Array.from(new Set(messages.map(m => m.user_id).filter(Boolean)));
+
+            try {
+                const [tagsRes, rolesRes] = await Promise.all([
+                    userIds.length ? supabase.from('user_tags').select('*').in('user_id', userIds) : Promise.resolve({ data: [] }),
+                    userIds.length ? supabase.from('user_roles').select('user_id, role').in('user_id', userIds) : Promise.resolve({ data: [] })
+                ]);
+
+                const tagMap = new Map((tagsRes.data || []).map(t => [t.user_id, t]));
+                const roleMap = new Map((rolesRes.data || []).map(r => [r.user_id, r.role]));
+
+                const html = messages.map(msg => {
+                    const avatar = generateAvatar(msg.username);
+                    const role = roleMap.get(msg.user_id) || 'user';
+                    const isAdmin = role === 'admin';
+                    const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                    const tag = tagMap.get(msg.user_id);
+                    const tagHTML = tag ? `<span style="background: rgb(${tag.tag_color_r}, ${tag.tag_color_g}, ${tag.tag_color_b}); color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tag.tag_text)}</span>` : '';
+
+                    return `
+                        <div class="message">
+                            <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <span class="message-author">${escapeHtml(msg.username)}${adminBadge}${tagHTML}</span>
+                                    <span class="message-time">${new Date(msg.created_at).toLocaleTimeString()}</span>
+                                </div>
+                                <div class="message-text">${escapeHtml(msg.content)}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                messagesArea.innerHTML = html;
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            } catch (err) {
+                console.error('Error rendering messages:', err);
+                // fallback to appending sequentially
+                messages.forEach(m => appendMessage(m));
+            }
+        }
+
+        async function appendMessage(message) {
+            const messagesArea = document.getElementById('messagesArea');
+            if (messagesArea.querySelector('.empty-state')) {
+                messagesArea.innerHTML = '';
+            }
+
+            try {
+                // Fetch user role
+                const { data: roleData } = await supabase
+                    .from('user_roles')
+                    .select('role')
+                    .eq('user_id', message.user_id)
+                    .single();
+
+                // Fetch user tag
+                const { data: tagData } = await supabase
+                    .from('user_tags')
+                    .select('*')
+                    .eq('user_id', message.user_id)
+                    .single();
+
+                const avatar = generateAvatar(message.username);
+                const messageEl = document.createElement('div');
+                messageEl.className = 'message';
+                
+                const isAdmin = roleData?.role === 'admin';
+                const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                
+                let tagHTML = '';
+                if (tagData) {
+                    const tagColor = `rgb(${tagData.tag_color_r}, ${tagData.tag_color_g}, ${tagData.tag_color_b})`;
+                    tagHTML = `<span style="background: ${tagColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tagData.tag_text)}</span>`;
+                }
+                
+                messageEl.innerHTML = `
+                    <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">${message.username}${adminBadge}${tagHTML}</span>
+                            <span class="message-time">${new Date(message.created_at).toLocaleTimeString()}</span>
+                        </div>
+                        <div class="message-text">${escapeHtml(message.content)}</div>
+                    </div>
+                `;
+                messagesArea.appendChild(messageEl);
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            } catch (error) {
+                console.error('Error appending message:', error);
+                // Still display message even if role/tag fetch fails
+                const avatar = generateAvatar(message.username);
+                const messageEl = document.createElement('div');
+                messageEl.className = 'message';
+                messageEl.innerHTML = `
+                    <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">${message.username}</span>
+                            <span class="message-time">${new Date(message.created_at).toLocaleTimeString()}</span>
+                        </div>
+                        <div class="message-text">${escapeHtml(message.content)}</div>
+                    </div>
+                `;
+                messagesArea.appendChild(messageEl);
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const content = input.value.trim();
+
+            if (!content) return;
+
+            try {
+                console.log('Sending message to channel:', currentChannel);
+                const { data, error } = await supabase.from('messages').insert({
+                    channel: currentChannel,
+                    user_id: currentUser.id,
+                    username: currentUser.profile?.username || currentUser.email,
+                    content: content,
+                    avatar_color: currentUser.profile?.avatar_color || getRandomColor()
+                });
+
+                if (error) {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message: ' + error.message);
+                } else {
+                    console.log('Message sent successfully');
+                    input.value = '';
+                    input.style.height = 'auto';
+                }
+            } catch (err) {
+                console.error('Send message exception:', err);
+                alert('Failed to send message');
+            }
+        }
+
+        function markUserOnline(email) {
+            // Mark user as online with current timestamp and start heartbeat
+            const userData = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+            userData[email] = {
+                online: true,
+                lastSeen: Date.now(),
+                isAdmin: userRole === 'admin',
+                userId: currentUser?.id
+            };
+            sessionStorage.setItem('onlineUsers', JSON.stringify(userData));
+            onlineUsers.set(email, { online: true, isAdmin: userRole === 'admin', userId: currentUser?.id });
+
+            // Start a heartbeat to keep current user marked as online
+            if (currentUser && !window.memberHeartbeatInterval) {
+                window.memberHeartbeatInterval = setInterval(() => {
+                    try {
+                        const ud = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+                        ud[email] = ud[email] || {};
+                        ud[email].lastSeen = Date.now();
+                        ud[email].isAdmin = userRole === 'admin';
+                        ud[email].userId = currentUser?.id;
+                        sessionStorage.setItem('onlineUsers', JSON.stringify(ud));
+                        onlineUsers.set(email, { online: true, isAdmin: userRole === 'admin', userId: currentUser?.id });
+                    } catch (e) {
+                        console.error('Heartbeat error:', e);
+                    }
+                }, 15000); // update every 15s
+
+                // On unload remove the current user's entry so others see them offline
+                window.addEventListener('beforeunload', () => {
+                    try {
+                        const ud = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+                        delete ud[email];
+                        sessionStorage.setItem('onlineUsers', JSON.stringify(ud));
+                    } catch (e) {}
+                });
+            }
+        }
+
+        function getOnlineUsers() {
+            const userData = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+            const now = Date.now();
+            const onlineList = [];
+            
+            // Consider users online if seen in the last 5 minutes
+            Object.keys(userData).forEach(email => {
+                if (now - userData[email].lastSeen < 5 * 60 * 1000) {
+                    onlineList.push(email);
+                }
+            });
+            return onlineList;
+        }
+
+        function startMemberListUpdates() {
+            updateMemberList();
+            memberListInterval = setInterval(updateMemberList, 2000);
+        }
+
+        async function updateMemberList() {
+            const memberListEl = document.getElementById('memberList');
+            try {
+                // Load all profiles so we show everyone (online or offline)
+                const { data: profiles } = await supabase.from('profiles').select('id, username');
+
+                if (!profiles || profiles.length === 0) {
+                    memberListEl.innerHTML = '<div style="padding: 16px; color: #72767d; font-size: 12px;">No users found</div>';
+                    return;
+                }
+
+                // Fetch tags and roles in bulk to avoid per-user queries
+                const [{ data: allTags }, { data: allRoles }] = await Promise.all([
+                    supabase.from('user_tags').select('*'),
+                    supabase.from('user_roles').select('user_id, role')
+                ]);
+
+                const tagMap = new Map();
+                allTags?.forEach(tag => tagMap.set(tag.user_id, tag));
+
+                const roleMap = new Map();
+                allRoles?.forEach(r => roleMap.set(r.user_id, r.role));
+
+                // Build a map from userId -> session info from sessionStorage
+                const stored = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+                const userIdToSession = new Map();
+                Object.keys(stored).forEach(email => {
+                    const entry = stored[email];
+                    if (entry && entry.userId) userIdToSession.set(entry.userId, { email, lastSeen: entry.lastSeen, isAdmin: entry.isAdmin });
+                });
+
+                const now = Date.now();
+                const onlineThreshold = 2 * 60 * 1000; // 2 minutes
+
+                const html = profiles.map(profile => {
+                    const pid = profile.id;
+                    const username = profile.username || profile.id;
+                    const avatar = generateAvatar(username);
+                    const session = userIdToSession.get(pid);
+                    const isOnline = session && (now - session.lastSeen < onlineThreshold);
+                    const statusClass = isOnline ? 'online' : 'offline';
+                    const role = roleMap.get(pid) || 'user';
+                    const isAdmin = role === 'admin';
+                    const adminHTML = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                    const tag = tagMap.get(pid);
+                    let tagHTML = '';
+                    if (tag) {
+                        const tagColor = `rgb(${tag.tag_color_r}, ${tag.tag_color_g}, ${tag.tag_color_b})`;
+                        tagHTML = `<span style="background: ${tagColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tag.tag_text)}</span>`;
+                    }
+                    const you = (currentUser && currentUser.id === pid) ? ' <span style="color: #72767d; font-size: 12px;">(you)</span>' : '';
+
+                    return `
+                        <div class="member-item" title="${session?.email || 'Unknown'}" data-user-id="${pid}" onclick="showMemberCard(event, '${pid}')">
+                            <div class="member-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
+                            <div class="member-name">
+                                ${escapeHtml(username)}
+                                ${adminHTML}
+                                ${tagHTML}
+                                ${you}
+                            </div>
+                            <div class="member-status ${statusClass}" title="${isOnline ? 'Online' : 'Offline'}"></div>
+                        </div>
+                    `;
+                }).join('');
+
+                memberListEl.innerHTML = html;
+            } catch (error) {
+                console.error('Error updating member list:', error);
+                memberListEl.innerHTML = '<div style="padding: 16px; color: #72767d; font-size: 12px;">Unable to load members</div>';
+            }
+        }
+        function generateAvatar(username) {
+            const letter = (username || 'U')[0].toUpperCase();
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#feca57', '#ff9ff3', '#56ab2f', '#ff6b6b'];
+            let hash = 0;
+            for (let i = 0; i < username.length; i++) {
+                hash = username.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const color = colors[Math.abs(hash) % colors.length];
+            return { letter, color };
+        }
+
+        function getRandomColor() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#feca57', '#ff9ff3', '#56ab2f', '#ff6b6b'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Show a small member profile card next to the clicked member
+        async function showMemberCard(event, userId) {
+            event.stopPropagation();
+            const card = document.getElementById('memberCard');
+            if (!card) return;
+
+            try {
+                const [{ data: profile }, { data: roleRes }, { data: tagRes }] = await Promise.all([
+                    supabase.from('profiles').select('id, username, email').eq('id', userId).maybeSingle(),
+                    supabase.from('user_roles').select('role').eq('user_id', userId).maybeSingle(),
+                    supabase.from('user_tags').select('*').eq('user_id', userId).maybeSingle()
+                ]);
+
+                const username = profile?.username || userId;
+                const role = roleRes?.role || 'user';
+                const roleHTML = role === 'admin' ? '<div class="mc-row"><strong>Role:</strong> <span style="color:#f04747;">👑 Admin</span></div>' : '';
+                const tagHTML = tagRes ? `<div class="mc-row"><strong>Tag:</strong> <span style="background:rgb(${tagRes.tag_color_r},${tagRes.tag_color_g},${tagRes.tag_color_b});color:white;padding:2px 6px;border-radius:3px;font-size:11px;">${escapeHtml(tagRes.tag_text)}</span></div>` : '';
+
+                // Use profile email directly if available, otherwise use sessionStorage lookup
+                let email = profile?.email || 'Unknown';
+                let status = 'Offline';
+                
+                // Only use sessionStorage lookup if profile doesn't have email
+                if (!profile?.email) {
+                    const stored = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
+                    Object.keys(stored).forEach(e => {
+                        const entry = stored[e];
+                        if (entry && entry.userId === userId) {
+                            email = e;
+                            status = (Date.now() - entry.lastSeen < 2 * 60 * 1000) ? 'Online' : 'Offline';
+                        }
+                    });
+                }
+
+                const avatar = generateAvatar(username);
+
+                card.innerHTML = `
+                    <div class="mc-header">
+                        <div class="mc-avatar" style="background:${avatar.color};color:white;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;flex-shrink:0;">
+                            ${avatar.letter}
+                        </div>
+                        <div class="mc-info">
+                            <div class="mc-username">${escapeHtml(username)}</div>
+                            <div class="mc-email">${escapeHtml(email)}</div>
+                        </div>
+                    </div>
+                    <div class="mc-row"><strong>Status:</strong> ${status}</div>
+                    ${roleHTML}
+                    ${tagHTML}
+                    <div style="text-align:right; margin-top:8px;"><button class="btn" style="padding:6px 8px; background:#40444b; border:none; color:#fff; border-radius:4px;" onclick="hideMemberCard()">Close</button></div>
+                `;
+
+                // position card near clicked element - use event.target instead of event.currentTarget
+                const clickedElement = event.target || event.srcElement;
+                const memberItem = clickedElement.closest('.member-item');
+                if (memberItem) {
+                    const rect = memberItem.getBoundingClientRect();
+                    const top = rect.top + window.scrollY;
+                    let left = rect.left - 250; // 250px is card width + some padding
+                    
+                    // adjust if card would go off screen
+                    const cardWidth = 250;
+                    if (left < 10) left = 10;
+                    if (left + cardWidth > window.innerWidth - 10) left = window.innerWidth - cardWidth - 10;
+                    
+                    card.style.top = top + 'px';
+                    card.style.left = left + 'px';
+                    card.style.display = 'block';
+                    card.style.position = 'absolute';
+                    card.style.zIndex = '1000';
+                } else {
+                    // fallback: center the card
+                    card.style.top = '50%';
+                    card.style.left = '50%';
+                    card.style.transform = 'translate(-50%, -50%)';
+                    card.style.display = 'block';
+                    card.style.position = 'fixed';
+                    card.style.zIndex = '1000';
+                }
+            } catch (err) {
+                console.error('Error showing member card:', err);
+            }
+        }
+
+        function hideMemberCard() {
+            const card = document.getElementById('memberCard');
+            if (card) {
+                card.style.display = 'none';
+                card.classList.remove('active');
+            }
+        }
+
+        // hide member card when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            const card = document.getElementById('memberCard');
+            if (!card) return;
+            if (!card.contains(e.target) && !e.target.closest('.member-item')) {
+                hideMemberCard();
+            }
+        });
+
+        function setupAutoResize() {
+            const textarea = document.getElementById('messageInput');
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+            });
+
+            textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+
+        // Add Enter key support to login and signup forms
+        document.getElementById('loginForm').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        document.getElementById('signupForm').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('signupForm').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Close profile modal when clicking outside
+        document.getElementById('profileModal').addEventListener('click', (e) => {
+            if (e.target.id === 'profileModal') {
+                closeProfile();
+            }
+        });
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load and apply saved theme immediately
+            const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+            if (savedSettings.theme) {
+                applyTheme(savedSettings.theme);
+            }
+        });
+
+        // PAGE NAVIGATION
+        function showLogin() {
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('signupPage').classList.add('hidden');
+            document.getElementById('chatPage').classList.add('hidden');
+            // Clear error messages
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('loginEmailError').textContent = '';
+            document.getElementById('loginPasswordError').textContent = '';
+        }
+
+        function showSignup() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('signupPage').classList.remove('hidden');
+            document.getElementById('chatPage').classList.add('hidden');
+            // Clear error messages
+            document.getElementById('signupError').textContent = '';
+            document.getElementById('signupUsernameError').textContent = '';
+            document.getElementById('signupEmailError').textContent = '';
+            document.getElementById('signupPasswordError').textContent = '';
+            document.getElementById('signupPasswordConfirmError').textContent = '';
+        }
+
+        function showChat() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('signupPage').classList.add('hidden');
+            document.getElementById('chatPage').classList.remove('hidden');
+        }
+
+        function showProfile() {
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        async function logout(event) {
+            if (event) event.stopPropagation();
+            if (memberListInterval) clearInterval(memberListInterval);
+            await supabase.auth.signOut();
+            currentUser = null;
+            currentServer = 'home';
+            showLogin();
+            document.getElementById('loginForm').reset();
+            document.getElementById('signupForm').reset();
+        }
+
+        // SERVER/GUILD FUNCTIONS
+        function selectServer(serverId, element) {
+            // Remove active class from all server items
+            document.querySelectorAll('.guild-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected server
+            element.classList.add('active');
+            
+            currentServer = serverId;
+            
+            // Update server name in sidebar header
+            const serverNames = {
+                'home': 'Direct Messages',
+                'vaultcord': 'VaultCord',
+                'gaming': 'Gaming Hub',
+                'coding': 'Coding Zone',
+                'art': 'Art & Design'
+            };
+            
+            document.getElementById('serverName').textContent = serverNames[serverId] || 'Server';
+            
+            // For now, just show placeholder - servers don't navigate anywhere yet
+            const channelsList = document.getElementById('channelsList');
+            channelsList.innerHTML = '<div style="padding: 20px; color: #72767d; text-align: center;">Server features coming soon!</div>';
+            
+            // Clear messages area
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.innerHTML = '<div class="empty-state"><p>Select a server to see channels here soon!</p></div>';
+        }
+
+        function selectFakeChannel(channelName) {
+            currentChannel = channelName;
+            document.getElementById('channelName').textContent = `# ${channelName}`;
+            
+            // Clear messages and show empty state for fake channels
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.innerHTML = '<div class="empty-state"><p>This is a demo server. Messages are not saved here.</p></div>';
+        }
+
+        function addServer() {
+            alert('Server creation feature coming soon!');
+        }
+
+        // USER SETTINGS FUNCTIONS
+        async function openUserSettings(event) {
+            if (event) event.stopPropagation();
+            
+            // Update settings modal with current user data
+            const avatar = generateAvatar(currentUser.profile?.username || currentUser.email);
+            document.getElementById('settingsAvatarLarge').textContent = avatar.letter;
+            document.getElementById('settingsAvatarLarge').style.backgroundColor = avatar.color;
+            document.getElementById('settingsUsername').textContent = currentUser.profile?.username || 'User';
+            document.getElementById('settingsEmail').textContent = currentUser.email;
+            
+            // Update admin badge
+            const settingsAdminBadge = document.getElementById('settingsAdminBadge');
+            if (userRole === 'admin') {
+                settingsAdminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">👑 ADMIN</span>';
+            } else {
+                settingsAdminBadge.innerHTML = '';
+            }
+            
+            // Update user tag
+            try {
+                const { data: userTag } = await supabase
+                    .from('user_tags')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .single();
+
+                const settingsUserTag = document.getElementById('settingsUserTag');
+                if (userTag && settingsUserTag) {
+                    const tagColor = `rgb(${userTag.tag_color_r}, ${userTag.tag_color_g}, ${userTag.tag_color_b})`;
+                    settingsUserTag.innerHTML = `<span style="background: ${tagColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">${escapeHtml(userTag.tag_text)}</span>`;
+                } else if (settingsUserTag) {
+                    settingsUserTag.innerHTML = '';
+                }
+            } catch (error) {
+                console.log('No tag found for user');
+            }
+            
+            // Load saved settings
+            loadUserSettings();
+            
+            // Show modal
+            document.getElementById('userSettingsModal').classList.add('active');
+        }
+
+function closeUserSettings() {
+    document.getElementById('userSettingsModal').classList.remove('active');
+}
+
+function loadUserSettings() {
+    // Load settings from localStorage
+    const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+    
+    document.getElementById('settingsDisplayName').value = savedSettings.displayName || '';
+    document.getElementById('settingsDescription').value = savedSettings.description || '';
+    document.getElementById('settingsStatusMessage').value = savedSettings.statusMessage || '';
+    document.getElementById('settingsTheme').value = savedSettings.theme || 'dark';
+    document.getElementById('settingsNotifications').checked = savedSettings.notifications !== false;
+    
+    // Apply theme immediately after loading settings
+    applyTheme(savedSettings.theme || 'dark');
+}
+
+function applyTheme(theme) {
+    // Don't apply theme to messages if settings modal is open
+    const isSettingsModalOpen = document.getElementById('userSettingsModal').classList.contains('active');
+    
+    if (theme === 'light') {
+        // Light theme colors
+        const lightColors = {
+            body: '#ffffff',
+            text: '#000000',
+            sidebar: '#f8f9fa',
+            sidebarText: '#000000',
+            mainContent: '#ffffff',
+            input: '#e9ecef',
+            inputText: '#000000',
+            inputBorder: '#ced4da',
+            modal: '#ffffff',
+            modalText: '#000000',
+            authBox: '#ffffff',
+            authGradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+            guildBar: '#e9ecef',
+            userPanel: '#f8f9fa',
+            borderColor: '#ced4da',
+            guildItem: '#36393f',
+            guildAdd: '#36393f',
+            message: '#f8f9fa',
+            messageText: '#000000',
+            memberCard: '#ffffff',
+            memberCardText: '#000000'
+        };
+        
+        // Apply light theme
+        document.body.style.background = lightColors.body;
+        document.body.style.color = lightColors.text;
+        
+        document.querySelectorAll('.auth-container').forEach(el => {
+            el.style.background = lightColors.authGradient;
+        });
+        document.querySelectorAll('.auth-box').forEach(el => {
+            el.style.background = lightColors.authBox;
+            el.style.color = lightColors.modalText;
+        });
+        document.querySelectorAll('.sidebar, .member-list').forEach(el => {
+            el.style.background = lightColors.sidebar;
+            el.style.color = lightColors.sidebarText;
+        });
+        document.querySelectorAll('.main-content').forEach(el => {
+            el.style.background = lightColors.mainContent;
+        });
+        document.querySelectorAll('.message-input').forEach(el => {
+            el.style.background = lightColors.input;
+            el.style.color = lightColors.inputText;
+            el.style.borderColor = lightColors.inputBorder;
+        });
+        document.querySelectorAll('.modal-content').forEach(el => {
+            el.style.background = lightColors.modal;
+            el.style.color = lightColors.modalText;
+        });
+        document.querySelectorAll('.form-control').forEach(el => {
+            el.style.background = lightColors.input;
+            el.style.color = lightColors.inputText;
+            el.style.borderColor = lightColors.inputBorder;
+        });
+        document.querySelectorAll('.guild-bar').forEach(el => {
+            el.style.background = lightColors.guildBar;
+        });
+        document.querySelectorAll('.user-panel').forEach(el => {
+            el.style.background = lightColors.userPanel;
+        });
+        document.querySelectorAll('.sidebar-header').forEach(el => {
+            el.style.background = lightColors.sidebar;
+            el.style.color = lightColors.sidebarText;
+            el.style.borderBottomColor = lightColors.borderColor;
+        });
+        document.querySelectorAll('.guild-item').forEach(el => {
+            // Don't override inline styles for individual server colors
+            if (!el.style.background || el.style.background === 'rgb(54, 57, 63)' || el.style.background === '#36393f') {
+                el.style.background = '#36393f';
+            }
+            el.style.color = '#dcddde';
+        });
+        document.querySelectorAll('.guild-item.active').forEach(el => {
+            el.style.background = '#4f545c';
+            el.style.color = '#ffffff';
+        });
+        document.querySelectorAll('.guild-item.home').forEach(el => {
+            el.style.background = 'linear-gradient(135deg, #7289da, #4f545c)';
+            el.style.background = 'linear-gradient(135deg, #5a6eb8, #667eea)';
+        });
+        document.querySelectorAll('.guild-separator').forEach(el => {
+            el.style.background = lightColors.borderColor;
+        });
+        document.querySelectorAll('.guild-add').forEach(el => {
+            el.style.background = lightColors.guildAdd;
+            el.style.color = '#43b581';
+        });
+        
+        // Only apply message styles if settings modal is NOT open
+        if (!isSettingsModalOpen) {
+            document.querySelectorAll('.message').forEach(el => {
+                el.style.background = '';
+                el.style.color = lightColors.messageText;
+            });
+        }
+        
+        document.querySelectorAll('.member-card').forEach(el => {
+            el.style.background = lightColors.memberCard;
+            el.style.color = lightColors.memberCardText;
+        });
+    } else {
+        // Dark theme colors
+        const darkColors = {
+            body: '#36393f',
+            text: '#dcddde',
+            sidebar: '#2f3136',
+            sidebarText: '#dcddde',
+            mainContent: '#36393f',
+            input: '#40444b',
+            inputText: '#dcddde',
+            inputBorder: '#202225',
+            modal: '#36393f',
+            modalText: '#dcddde',
+            authBox: '#2f3136',
+            authGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            guildBar: '#202225',
+            userPanel: '#292b2f',
+            borderColor: '#202225',
+            guildItem: '#36393f',
+            guildAdd: '#2f3136',
+            message: '#40444b',
+            messageText: '#dcddde',
+            memberCard: '#36393f',
+            memberCardText: '#dcddde'
+        };
+        
+        // Apply dark theme
+        document.body.style.background = darkColors.body;
+        document.body.style.color = darkColors.text;
+        
+        document.querySelectorAll('.auth-container').forEach(el => {
+            el.style.background = darkColors.authGradient;
+        });
+        document.querySelectorAll('.auth-box').forEach(el => {
+            el.style.background = darkColors.authBox;
+            el.style.color = darkColors.modalText;
+        });
+        document.querySelectorAll('.sidebar, .member-list').forEach(el => {
+            el.style.background = darkColors.sidebar;
+            el.style.color = darkColors.sidebarText;
+        });
+        document.querySelectorAll('.main-content').forEach(el => {
+            el.style.background = darkColors.mainContent;
+        });
+        document.querySelectorAll('.message-input').forEach(el => {
+            el.style.background = darkColors.input;
+            el.style.color = darkColors.inputText;
+            el.style.borderColor = darkColors.inputBorder;
+        });
+        document.querySelectorAll('.modal-content').forEach(el => {
+            el.style.background = darkColors.modal;
+            el.style.color = darkColors.modalText;
+        });
+        document.querySelectorAll('.form-control').forEach(el => {
+            el.style.background = darkColors.input;
+            el.style.color = darkColors.inputText;
+            el.style.borderColor = darkColors.inputBorder;
+        });
+        document.querySelectorAll('.guild-bar').forEach(el => {
+            el.style.background = darkColors.guildBar;
+        });
+        document.querySelectorAll('.user-panel').forEach(el => {
+            el.style.background = darkColors.userPanel;
+        });
+        document.querySelectorAll('.sidebar-header').forEach(el => {
+            el.style.background = darkColors.sidebar;
+            el.style.color = darkColors.sidebarText;
+            el.style.borderBottomColor = darkColors.borderColor;
+        });
+        document.querySelectorAll('.guild-item').forEach(el => {
+            el.style.background = '';
+            el.style.color = '';
+        });
+        document.querySelectorAll('.guild-item.active').forEach(el => {
+            el.style.background = '';
+            el.style.color = '';
+        });
+        document.querySelectorAll('.guild-item.home').forEach(el => {
+            el.style.background = '';
+            el.style.background = 'linear-gradient(135deg, #7289da, #667eea)';
+        });
+        document.querySelectorAll('.guild-separator').forEach(el => {
+            el.style.background = darkColors.borderColor;
+        });
+        document.querySelectorAll('.guild-add').forEach(el => {
+            el.style.background = darkColors.guildAdd;
+            el.style.color = '#43b581';
+        });
+        
+        // Only apply message styles if settings modal is NOT open
+        if (!isSettingsModalOpen) {
+            document.querySelectorAll('.message').forEach(el => {
+                el.style.background = darkColors.message;
+                el.style.color = darkColors.messageText;
+            });
+        }
+        
+        document.querySelectorAll('.member-card').forEach(el => {
+            el.style.background = darkColors.memberCard;
+            el.style.color = darkColors.memberCardText;
+        });
+    }
+}
+
+function saveUserSettings() {
+    // Save settings to localStorage
+    const settings = {
+        displayName: document.getElementById('settingsDisplayName').value,
+        description: document.getElementById('settingsDescription').value,
+        statusMessage: document.getElementById('settingsStatusMessage').value,
+        theme: document.getElementById('settingsTheme').value,
+        notifications: document.getElementById('settingsNotifications').checked
+    };
+    
+    localStorage.setItem('userSettings', JSON.stringify(settings));
+    
+    // Apply theme
+    applyTheme(settings.theme);
+    
+    alert('Settings saved successfully!');
+    closeUserSettings();
+}
+
+</script>
+
+<!-- Member profile card -->
+<div id="memberCard" class="member-card" aria-hidden="true"></div>
+</body>
+    </body>
+    </html>
+</html>
