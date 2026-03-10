@@ -72,10 +72,42 @@
   <iframe 
     src="https://padlet.com/embed/pwj8x8cqy4ohruh4" 
     frameborder="0" 
-    allow="camera;microphone;geolocation;display-capture;clipboard-write" 
+    allow="clipboard-write" 
     style="width:100%;height:100%;display:block;padding:0;margin:0"
-    onload="document.getElementById('loadingContainer').style.display='none'">
+    onload="hideLoading()"
+    onerror="showError()">
   </iframe>
+
+  <script>
+    function hideLoading() {
+      const loadingContainer = document.getElementById('loadingContainer');
+      if (loadingContainer) {
+        loadingContainer.style.display = 'none';
+      }
+    }
+    
+    function showError() {
+      const loadingContainer = document.getElementById('loadingContainer');
+      if (loadingContainer) {
+        loadingContainer.innerHTML = `
+          <div class="spinner" style="border-top: 5px solid #e74c3c;"></div>
+          <p class="loading-text" style="color: #e74c3c;">Failed to load comments</p>
+          <p class="loading-warning">Please refresh the page or try again later</p>
+        `;
+      }
+    }
+    
+    // Fallback timeout - hide loading after 10 seconds even if iframe doesn't load
+    setTimeout(() => {
+      const loadingContainer = document.getElementById('loadingContainer');
+      if (loadingContainer && loadingContainer.style.display !== 'none') {
+        loadingContainer.innerHTML = `
+          <p class="loading-text" style="color: #f39c12;">Loading is taking longer than expected</p>
+          <p class="loading-warning">Comments may still be loading in the background</p>
+        `;
+      }
+    }, 10000);
+  </script>
 
 </body>
 </html>
