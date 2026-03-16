@@ -12,6 +12,7 @@
         }
 
         body {
+            --message-hover: rgba(255,255,255,0.06);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: #36393f;
             color: #dcddde;
@@ -61,17 +62,16 @@
         }
 
         .guild-item:hover {
-            background: #667eea;
             border-radius: 25%;
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transform: scale(1.06);
+            filter: brightness(1.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
         }
 
         .guild-item.active {
-            background: #667eea;
             border-radius: 25%;
             border-color: #fff;
-            box-shadow: 0 0 0 2px #202225, 0 0 0 4px #667eea;
+            box-shadow: 0 0 0 2px #202225, 0 0 0 4px rgba(255, 255, 255, 0.6);
         }
 
         .guild-item.home {
@@ -157,17 +157,17 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6d7bff 0%, #6f5bd4 100%);
             min-height: 100vh;
         }
 
         .auth-box {
             background: #2f3136;
-            padding: 40px;
+            padding: 36px 40px;
             border-radius: 10px;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
         }
 
         .auth-box h2 {
@@ -190,18 +190,18 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #202225;
+            padding: 11px 12px;
+            border: 1px solid #1f2124;
             border-radius: 5px;
-            background: #40444b;
-            color: #dcddde;
+            background: #3b3f46;
+            color: #e6e6e6;
             font-size: 14px;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
-            background: #36393f;
+            border-color: #6d7bff;
+            background: #343840;
         }
 
         .btn {
@@ -216,13 +216,13 @@
         }
 
         .btn-primary {
-            background: #667eea;
+            background: #6d7bff;
             color: #fff;
             margin-top: 10px;
         }
 
         .btn-primary:hover {
-            background: #5568d3;
+            background: #5f6cf0;
         }
 
         .auth-link {
@@ -416,6 +416,234 @@
             font-size: 16px;
             font-weight: 600;
         }
+        .chat-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .notif-btn {
+            background: #2f3136;
+            border: 1px solid #202225;
+            color: #dcddde;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .notif-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #f04747;
+            color: #fff;
+            font-size: 10px;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        .notif-panel {
+            position: absolute;
+            right: 0;
+            top: 40px;
+            width: 320px;
+            background: #2f3136;
+            border: 1px solid #202225;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+            z-index: 50;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .notif-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #202225;
+            font-size: 13px;
+            color: #dcddde;
+        }
+
+        .notif-item:last-child {
+            border-bottom: none;
+        }
+
+        .typing-indicator {
+            font-size: 12px;
+            color: #72767d;
+            margin-left: 8px;
+        }
+
+        .reply-preview {
+            background: #2f3136;
+            border: 1px solid #202225;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 0 16px 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            color: #dcddde;
+            font-size: 12px;
+        }
+
+
+        .reply-snippet {
+            font-size: 12px;
+            color: #b9bbbe;
+            margin-bottom: 4px;
+        }
+
+        .reply-preview button {
+            background: none;
+            border: none;
+            color: #dcddde;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .mention-highlight {
+            background: rgba(88, 101, 242, 0.18);
+            border-left: 3px solid #5865f2;
+            padding-left: 8px;
+        }
+
+        .reply-highlight {
+            background: rgba(250, 166, 26, 0.16);
+            border-left: 3px solid #faa61a;
+            padding-left: 8px;
+        }
+
+        .message-actions {
+            margin-top: 6px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .reaction-pill {
+            background: #40444b;
+            border: 1px solid #202225;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #dcddde;
+        }
+
+        .reaction-pill.reacted {
+            background: rgba(88, 101, 242, 0.18);
+            border-color: #5865f2;
+        }
+
+        .reply-btn {
+            background: #2f3136;
+            border: 1px solid #202225;
+            color: #dcddde;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .message-header .reply-btn {
+            opacity: 0;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            transform: translateY(-2px);
+        }
+
+        .message:hover .message-header .reply-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reply-btn:hover {
+            filter: brightness(1.08);
+        }
+
+        .message-attachment video {
+            max-width: 320px;
+            border-radius: 8px;
+            margin-top: 6px;
+            background: #000;
+        }
+
+        .upload-btn {
+            background: #2f3136;
+            border: 1px solid #202225;
+            color: #dcddde;
+            padding: 8px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .message-attachment img {
+            max-width: 240px;
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        .message-attachment.uploading {
+            margin-top: 6px;
+            padding: 8px 10px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #b9bbbe;
+        }
+
+        .attachment-note {
+            margin-top: 4px;
+            font-size: 11px;
+            color: #b9bbbe;
+        }
+
+        .pending-message .message-attachment {
+            margin-top: 6px;
+            padding: 8px 10px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #b9bbbe;
+        }
+
+        .upload-bar {
+            margin-top: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(88, 101, 242, 0.1), rgba(88, 101, 242, 0.6), rgba(88, 101, 242, 0.1));
+            animation: uploadPulse 1.1s infinite;
+        }
+
+        @keyframes uploadPulse {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
 
         .messages-area {
             flex: 1;
@@ -423,18 +651,55 @@
             padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 6px;
         }
 
         .message {
+            background: transparent;
             display: flex;
             gap: 12px;
+            padding: 4px 6px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .message:hover {
+            background: var(--message-hover);
+        }
+
+        .message-actions {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .message:hover .message-actions {
+            opacity: 1;
+        }
+
+        .attachment-preview {
+            background: #2f3136;
+            border: 1px solid #202225;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 0 16px 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            color: #dcddde;
+            font-size: 12px;
+        }
+
+        .attachment-preview img,
+        .attachment-preview video {
+            max-width: 180px;
+            border-radius: 6px;
         }
 
         .message-avatar {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 50% !important;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -446,6 +711,7 @@
 
         .message-content {
             flex: 1;
+            width: 100%;
         }
 
         .message-header {
@@ -610,11 +876,23 @@
         }
 
         .member-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
             padding: 16px;
             border-bottom: 1px solid #202225;
             font-weight: 600;
             font-size: 14px;
             color: #72767d;
+        }
+        .member-list-status {
+            font-size: 11px;
+            color: #72767d;
+        }
+
+        .member-list-status.error {
+            color: #f04747;
         }
 
         .member-list-items {
@@ -666,11 +944,12 @@
 
         .member-status.online {
             background: #43b581;
+            box-shadow: 0 0 6px rgba(67, 181, 129, 0.4);
         }
 
         .member-status.offline {
-            background: #f04747; /* red for offline */
-            box-shadow: 0 0 6px rgba(240,71,71,0.15);
+            background: #f04747;
+            box-shadow: 0 0 6px rgba(240, 71, 71, 0.15);
         }
 
         /* Member profile popup card */
@@ -832,14 +1111,21 @@
                             <div class="user-meta"><span id="sidebarTag"></span></div>
                             <div class="status" id="sidebarStatus">Online</div>
                         </div>
-                        <button class="logout-btn" onclick="openUserSettings(event)">⚙️</button>
+                        <button class="logout-btn" onclick="openUserSettings(event)">&#9881;&#65039;</button>
                     </div>
                 </div>
 
                 <!-- MAIN CONTENT -->
                 <div class="main-content">
                     <div class="chat-header">
-                        <h3 id="channelName"># general</h3>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <h3 id="channelName"># general</h3>
+                            <span id="typingIndicator" class="typing-indicator"></span>
+                        </div>
+                        <div class="chat-header-actions">
+                            <button id="notifBtn" class="notif-btn" onclick="toggleNotifications()">&#128276;<span id="notifBadge" class="notif-badge hidden">0</span></button>
+                            <div id="notifPanel" class="notif-panel hidden"></div>
+                        </div>
                     </div>
 
                     <div class="messages-area" id="messagesArea">
@@ -849,7 +1135,11 @@
                     </div>
 
                     <div class="input-area">
+                        <div id="replyPreview" class="reply-preview hidden"></div>
+                        <div id="attachmentPreview" class="attachment-preview hidden"></div>
                         <div class="input-wrapper">
+                            <button class="upload-btn" onclick="triggerFileUpload()">&#128206;</button>
+                            <input type="file" id="fileInput" class="hidden" accept="image/*,video/*" />
                             <textarea class="message-input" id="messageInput" placeholder="Type a message..." rows="1"></textarea>
                             <button class="send-btn" onclick="sendMessage()">Send</button>
                         </div>
@@ -858,7 +1148,7 @@
 
                 <!-- MEMBER LIST -->
                 <div class="member-list">
-                    <div class="member-list-header">Members</div>
+                    <div class="member-list-header"><span>Members</span><span id="memberListStatus" class="member-list-status">Refreshed</span></div>
                     <div class="member-list-items" id="memberList">
                         <div style="padding: 16px; color: #72767d; font-size: 12px;">Loading members...</div>
                     </div>
@@ -976,11 +1266,35 @@
         let currentUser = null;
         let currentChannel = null;
         let messageUnsubscribe = null;
-        let onlineUsers = new Map(); // Track online users with timestamps
         let memberListInterval = null;
         let channels = []; // Store channels from database
         let userRole = 'user'; // Track user's role (user or admin)
         let currentServer = 'home'; // Track current server
+        const STORAGE_BUCKET = 'chat-uploads';
+        let typingChannel = null;
+        let typingTimer = null;
+        let typingCooldown = false;
+        let currentReplyTo = null;
+        let profilesCache = [];
+        let usernameToProfile = new Map();
+        let messageIndex = new Map();
+        let myReactions = new Map();
+        let attachmentDraft = null;
+        let attachmentOriginalName = null;
+        let attachmentConverting = false;
+        let ffmpegInstance = null;
+        let ffmpegLoaded = false;
+        let ffmpegFetchFile = null;
+        let ffmpegDisabled = false;
+        const MAX_TRANSCODE_BYTES = 25 * 1024 * 1024;
+        const ENABLE_CLIENT_TRANSCODE = false;
+        let reactionsChannel = null;
+        let notificationsUnsubscribe = null;
+
+        const PRESENCE_TABLE = 'user_presence';
+        const PRESENCE_HEARTBEAT_MS = 3000;
+        const ONLINE_THRESHOLD_MS = 20 * 1000;
+        let presenceCache = new Map();
 
         // Initialize
         window.addEventListener('load', () => {
@@ -1036,6 +1350,7 @@
                 userRole = roleData?.role || 'user';
                 console.log('User role:', userRole);
                 updateChannelUI();
+                await setPresence(true);
             } catch (err) {
                 console.error('Profile loading exception:', err);
             }
@@ -1055,7 +1370,7 @@
             usernameEl.textContent = currentUser.profile?.username || 'User';
             if (userRole === 'admin') {
                 const adminSpan = document.createElement('span');
-                adminSpan.textContent = '👑';
+                adminSpan.textContent = String.fromCodePoint(0x1F451);
                 adminSpan.style.color = '#f04747';
                 usernameEl.appendChild(adminSpan);
             }
@@ -1089,13 +1404,14 @@
                     }
                 }
             } catch (error) {
+                
                 console.log('No tag found for user');
             }
 
             // Show admin badge if admin
             const adminBadge = document.getElementById('adminBadge');
             if (userRole === 'admin') {
-                adminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">👑 ADMIN</span>';
+                adminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">&#128081; ADMIN</span>';
                 document.getElementById('devPanelBtn').style.display = 'block';
             }
 
@@ -1103,7 +1419,7 @@
             const sidebarAdmin = document.getElementById('sidebarAdmin');
             const sidebarStatus = document.getElementById('sidebarStatus');
             const usernameSidebar = document.getElementById('usernameSidebar');
-            if (sidebarAdmin) sidebarAdmin.innerHTML = userRole === 'admin' ? '<span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+            if (sidebarAdmin) sidebarAdmin.innerHTML = userRole === 'admin' ? '<span style="color: #f04747; font-weight: 600;">&#128081;</span>' : '';
             if (sidebarStatus) {
                 sidebarStatus.textContent = 'Online';
                 sidebarStatus.className = 'status online';
@@ -1133,6 +1449,7 @@
                     currentUser = data.user;
                     markUserOnline(email);
                     await loadUserProfile();
+                    loadUserSettings();
                     await loadChannels();
                     showChat();
                     startMemberListUpdates();
@@ -1175,6 +1492,7 @@
                     document.getElementById('signupError').textContent = profileError.message;
                 } else {
                     await loadUserProfile();
+                    loadUserSettings();
                     await loadChannels();
                     showChat();
                     startMemberListUpdates();
@@ -1217,7 +1535,7 @@
                         <span class="channel-hashtag">#</span>
                         <span>${ch.name}</span>
                     </div>
-                    ${userRole === 'admin' ? `<button class="channel-delete" onclick="deleteChannel('${ch.id}', event)">×</button>` : ''}
+                    ${userRole === 'admin' ? `<button class="channel-delete" onclick="deleteChannel('${ch.id}', event)">&times;</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1321,7 +1639,13 @@
                     // new messages still appended individually
                     appendMessage(payload.new);
                 })
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages', filter: `channel=eq.${currentChannel}` }, (payload) => {
+                    updateMessageAttachment(payload.new);
+                })
                 .subscribe();
+
+            setupTypingChannel();
+            setupReactionsChannel();
         }
 
         // Render all messages at once using bulk-fetched tags/roles for performance
@@ -1334,35 +1658,95 @@
                 return;
             }
 
+            messageIndex = new Map(messages.map(m => [String(m.id), m]));
+
             // Collect unique user IDs from messages
             const userIds = Array.from(new Set(messages.map(m => m.user_id).filter(Boolean)));
+            const messageIds = messages.map(m => m.id);
 
             try {
-                const [tagsRes, rolesRes] = await Promise.all([
+                // Fetch roles, tags, and reactions for all users/messages
+                const [tagsRes, rolesRes, reactionsMap, myReactionsMap] = await Promise.all([
                     userIds.length ? supabase.from('user_tags').select('*').in('user_id', userIds) : Promise.resolve({ data: [] }),
-                    userIds.length ? supabase.from('user_roles').select('user_id, role').in('user_id', userIds) : Promise.resolve({ data: [] })
+                    userIds.length ? supabase.from('user_roles').select('user_id, role').in('user_id', userIds) : Promise.resolve({ data: [] }),
+                    fetchReactions(messageIds),
+                    fetchMyReactions(messageIds)
                 ]);
 
                 const tagMap = new Map((tagsRes.data || []).map(t => [t.user_id, t]));
                 const roleMap = new Map((rolesRes.data || []).map(r => [r.user_id, r.role]));
 
+                const attachmentUrlMap = new Map();
+                await Promise.all(messages.map(async (m) => {
+                    if (m.attachment_url_mp4) {
+                        const url = await resolveAttachmentUrl(m.attachment_url_mp4, m.user_id);
+                        attachmentUrlMap.set(m.id, { url, name: m.attachment_name_mp4 || m.attachment_name, type: 'video/mp4' });
+                    } else if (m.attachment_url) {
+                        const url = await resolveAttachmentUrl(m.attachment_url, m.user_id);
+                        attachmentUrlMap.set(m.id, { url, name: m.attachment_name, type: m.attachment_type });
+                    }
+                }));
+
+                myReactions = myReactionsMap;
+
                 const html = messages.map(msg => {
                     const avatar = generateAvatar(msg.username);
                     const role = roleMap.get(msg.user_id) || 'user';
                     const isAdmin = role === 'admin';
-                    const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                    const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">&#128081;</span>' : '';
                     const tag = tagMap.get(msg.user_id);
                     const tagHTML = tag ? `<span style="background: rgb(${tag.tag_color_r}, ${tag.tag_color_g}, ${tag.tag_color_b}); color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tag.tag_text)}</span>` : '';
 
+                    const mention = isMentioned(msg.content || '');
+                    const replyToMe = msg.reply_to_user_id && currentUser && msg.reply_to_user_id === currentUser.id;
+                    const messageClass = `message${mention ? ' mention-highlight' : ''}${replyToMe ? ' reply-highlight' : ''}`;
+
+                    const replyHTML = msg.reply_to_username ? `<div class="reply-snippet">Replying to ${escapeHtml(msg.reply_to_username)}</div>` : '';
+                    const contentHTML = msg.content ? `<div class="message-text">${escapeHtml(msg.content)}</div>` : '';
+
+                    const resolvedMeta = attachmentUrlMap.get(msg.id);
+                    const resolvedUrl = resolvedMeta?.url;
+                    const resolvedName = resolvedMeta?.name || msg.attachment_name;
+                    const resolvedType = resolvedMeta?.type || msg.attachment_type;
+                    let attachmentHTML = '';
+                    if ((msg.attachment_url || msg.attachment_url_mp4) && !resolvedUrl) {
+                        attachmentHTML = `<div class="message-attachment uploading" data-attachment-for="${msg.id}">Uploading...</div>`;
+                    } else if (resolvedUrl) {
+                        if (resolvedType === 'image' || isImageExt(resolvedName)) {
+                            attachmentHTML = `<div class="message-attachment" data-attachment-for="${msg.id}"><img src="${resolvedUrl}" alt="${escapeHtml(resolvedName || 'image')}"></div>`;
+                        } else if (resolvedType === 'video' || isVideoExt(resolvedName) || resolvedType === 'video/mp4') {
+                            const canPlay = canPlayVideo(resolvedName || '');
+                            if (canPlay) {
+                                const typeAttr = resolvedType === 'video/mp4' ? ' type="video/mp4"' : getVideoMime(resolvedName);
+                                attachmentHTML = `<div class="message-attachment" data-attachment-for="${msg.id}"><video controls playsinline preload="metadata"><source src="${resolvedUrl}"${typeAttr}></video></div>`;
+                            } else {
+                                attachmentHTML = `<div class="message-attachment" data-attachment-for="${msg.id}"><a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'video')}</a><div class="attachment-note">This video format may not play in your browser. Download to view.</div></div>`;
+                            }
+                        } else {
+                            attachmentHTML = `<div class="message-attachment" data-attachment-for="${msg.id}"><a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'file')}</a></div>`;
+                        }
+                    }
+
+                    const headerActionsHTML = `<button class="reply-btn" data-reply-id="${msg.id}">Reply</button>`;
+                    const actionsHTML = `
+                        <div class="message-actions" data-reactions-for="${msg.id}">
+                            ${renderReactions(msg.id, reactionsMap, myReactions)}
+                        </div>
+                    `;
+
                     return `
-                        <div class="message">
+                        <div class="${messageClass}">
                             <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
                             <div class="message-content">
-                                <div class="message-header">
+                                <div class="message-header" style="display:flex;align-items:center;gap:8px;">
                                     <span class="message-author">${escapeHtml(msg.username)}${adminBadge}${tagHTML}</span>
                                     <span class="message-time">${new Date(msg.created_at).toLocaleTimeString()}</span>
+                                    <span style="margin-left:auto;">${headerActionsHTML}</span>
                                 </div>
-                                <div class="message-text">${escapeHtml(msg.content)}</div>
+                                ${replyHTML}
+                                ${contentHTML}
+                                ${attachmentHTML}
+                                ${actionsHTML}
                             </div>
                         </div>
                     `;
@@ -1378,10 +1762,15 @@
         }
 
         async function appendMessage(message) {
+            if (messageIndex.has(String(message.id))) {
+                return;
+            }
             const messagesArea = document.getElementById('messagesArea');
             if (messagesArea.querySelector('.empty-state')) {
                 messagesArea.innerHTML = '';
             }
+
+            messageIndex.set(String(message.id), message);
 
             try {
                 // Fetch user role
@@ -1398,27 +1787,77 @@
                     .eq('user_id', message.user_id)
                     .single();
 
+                const [reactionsMap, myReactionsMap] = await Promise.all([
+                    fetchReactions([message.id]),
+                    fetchMyReactions([message.id])
+                ]);
+                myReactionsMap.forEach((set, key) => {
+                    myReactions.set(key, set);
+                });
+
                 const avatar = generateAvatar(message.username);
                 const messageEl = document.createElement('div');
-                messageEl.className = 'message';
                 
                 const isAdmin = roleData?.role === 'admin';
-                const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                const adminBadge = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">&#128081;</span>' : '';
                 
                 let tagHTML = '';
                 if (tagData) {
                     const tagColor = `rgb(${tagData.tag_color_r}, ${tagData.tag_color_g}, ${tagData.tag_color_b})`;
                     tagHTML = `<span style="background: ${tagColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tagData.tag_text)}</span>`;
                 }
+
+                const mention = isMentioned(message.content || '');
+                const replyToMe = message.reply_to_user_id && currentUser && message.reply_to_user_id === currentUser.id;
+                messageEl.className = `message${mention ? ' mention-highlight' : ''}${replyToMe ? ' reply-highlight' : ''}`;
+
+                const replyHTML = message.reply_to_username ? `<div class="reply-snippet">Replying to ${escapeHtml(message.reply_to_username)}</div>` : '';
+                const contentHTML = message.content ? `<div class="message-text">${escapeHtml(message.content)}</div>` : '';
+
+                let attachmentHTML = '';
+                const resolvedMeta = message.attachment_url_mp4
+                    ? { url: await resolveAttachmentUrl(message.attachment_url_mp4, message.user_id), name: message.attachment_name_mp4 || message.attachment_name, type: 'video/mp4' }
+                    : { url: await resolveAttachmentUrl(message.attachment_url, message.user_id), name: message.attachment_name, type: message.attachment_type };
+                const resolvedUrl = resolvedMeta?.url;
+                const resolvedName = resolvedMeta?.name || message.attachment_name;
+                const resolvedType = resolvedMeta?.type || message.attachment_type;
+                if ((message.attachment_url || message.attachment_url_mp4) && !resolvedUrl) {
+                    attachmentHTML = `<div class="message-attachment uploading" data-attachment-for="${message.id}">Uploading...</div>`;
+                } else if (resolvedUrl) {
+                    if (resolvedType === 'image' || isImageExt(resolvedName)) {
+                        attachmentHTML = `<div class="message-attachment" data-attachment-for="${message.id}"><img src="${resolvedUrl}" alt="${escapeHtml(resolvedName || 'image')}"></div>`;
+                    } else if (resolvedType === 'video' || isVideoExt(resolvedName) || resolvedType === 'video/mp4') {
+                        const canPlay = canPlayVideo(resolvedName || '');
+                        if (canPlay) {
+                            const typeAttr = resolvedType === 'video/mp4' ? ' type="video/mp4"' : getVideoMime(resolvedName);
+                            attachmentHTML = `<div class="message-attachment" data-attachment-for="${message.id}"><video controls playsinline preload="metadata"><source src="${resolvedUrl}"${typeAttr}></video></div>`;
+                        } else {
+                            attachmentHTML = `<div class="message-attachment" data-attachment-for="${message.id}"><a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'video')}</a><div class="attachment-note">This video format may not play in your browser. Download to view.</div></div>`;
+                        }
+                    } else {
+                        attachmentHTML = `<div class="message-attachment" data-attachment-for="${message.id}"><a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'file')}</a></div>`;
+                    }
+                }
+
+                const headerActionsHTML = `<button class="reply-btn" data-reply-id="${message.id}">Reply</button>`;
+                const actionsHTML = `
+                    <div class="message-actions" data-reactions-for="${message.id}">
+                        ${renderReactions(message.id, reactionsMap, myReactions)}
+                    </div>
+                `;
                 
                 messageEl.innerHTML = `
                     <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
                     <div class="message-content">
-                        <div class="message-header">
+                        <div class="message-header" style="display:flex;align-items:center;gap:8px;">
                             <span class="message-author">${message.username}${adminBadge}${tagHTML}</span>
                             <span class="message-time">${new Date(message.created_at).toLocaleTimeString()}</span>
+                            <span style="margin-left:auto;">${headerActionsHTML}</span>
                         </div>
-                        <div class="message-text">${escapeHtml(message.content)}</div>
+                        ${replyHTML}
+                        ${contentHTML}
+                        ${attachmentHTML}
+                        ${actionsHTML}
                     </div>
                 `;
                 messagesArea.appendChild(messageEl);
@@ -1444,109 +1883,236 @@
             }
         }
 
+        async function updateMessageAttachment(message) {
+            if (!message || !message.id) return;
+            messageIndex.set(String(message.id), message);
+            const container = document.querySelector(`[data-attachment-for='${String(message.id)}']`);
+            if (!container) return;
+
+            const resolvedMeta = message.attachment_url_mp4
+                ? { url: await resolveAttachmentUrl(message.attachment_url_mp4, message.user_id), name: message.attachment_name_mp4 || message.attachment_name, type: 'video/mp4' }
+                : { url: await resolveAttachmentUrl(message.attachment_url, message.user_id), name: message.attachment_name, type: message.attachment_type };
+            const resolvedUrl = resolvedMeta?.url;
+            const resolvedName = resolvedMeta?.name || message.attachment_name;
+            const resolvedType = resolvedMeta?.type || message.attachment_type;
+
+            if (!resolvedUrl) return;
+
+            if (resolvedType === 'image' || isImageExt(resolvedName)) {
+                container.classList.remove('uploading');
+                container.innerHTML = `<img src="${resolvedUrl}" alt="${escapeHtml(resolvedName || 'image')}">`;
+            } else if (resolvedType === 'video' || isVideoExt(resolvedName) || resolvedType === 'video/mp4') {
+                const canPlay = canPlayVideo(resolvedName || '');
+                container.classList.remove('uploading');
+                if (canPlay) {
+                    const typeAttr = resolvedType === 'video/mp4' ? ' type="video/mp4"' : getVideoMime(resolvedName);
+                    container.innerHTML = `<video controls playsinline preload="metadata"><source src="${resolvedUrl}"${typeAttr}></video>`;
+                } else {
+                    container.innerHTML = `<a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'video')}</a><div class="attachment-note">This video format may not play in your browser. Download to view.</div>`;
+                }
+            } else {
+                container.classList.remove('uploading');
+                container.innerHTML = `<a href="${resolvedUrl}" target="_blank">${escapeHtml(resolvedName || 'file')}</a>`;
+            }
+        }
         async function sendMessage() {
             const input = document.getElementById('messageInput');
             const content = input.value.trim();
 
-            if (!content) return;
+            if (attachmentConverting) {
+                alert('Please wait for the video to finish converting.');
+                return;
+            }
+            if (!content && !attachmentDraft) return;
 
             try {
                 console.log('Sending message to channel:', currentChannel);
-                const { data, error } = await supabase.from('messages').insert({
+                const pendingId = createPendingMessage(content, attachmentDraft);
+                const attachment = await uploadAttachmentDraft();
+                if (attachmentDraft && !attachment) {
+                    markPendingFailed(pendingId, 'Upload failed');
+                    return;
+                }
+                const replyUserId = isUuid(currentReplyTo?.user_id) ? currentReplyTo.user_id : null;
+                const payload = {
                     channel: currentChannel,
                     user_id: currentUser.id,
                     username: currentUser.profile?.username || currentUser.email,
                     content: content,
-                    avatar_color: currentUser.profile?.avatar_color || getRandomColor()
-                });
+                    avatar_color: currentUser.profile?.avatar_color || getRandomColor(),
+                    reply_to: currentReplyTo?.id || null,
+                    reply_to_user_id: replyUserId,
+                    reply_to_username: currentReplyTo?.username || null,
+                    attachment_url: attachment?.attachment_url || null,
+                    attachment_type: attachment?.attachment_type || null,
+                    attachment_name: attachment?.attachment_name || null
+                };
+
+                const { data, error } = await supabase.from('messages').insert(payload).select().single();
 
                 if (error) {
                     console.error('Error sending message:', error);
                     alert('Failed to send message: ' + error.message);
+                    markPendingFailed(pendingId, 'Failed to send');
                 } else {
                     console.log('Message sent successfully');
                     input.value = '';
                     input.style.height = 'auto';
+                    clearReply();
+                    clearAttachmentDraft();
+                    createNotificationsForMessage(data);
+                    removePendingMessage(pendingId);
+                    appendMessage(data);
                 }
             } catch (err) {
                 console.error('Send message exception:', err);
                 alert('Failed to send message');
+                markPendingFailed(pendingId, 'Failed to send');
             }
         }
 
-        function markUserOnline(email) {
-            // Mark user as online with current timestamp and start heartbeat
-            const userData = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
-            userData[email] = {
-                online: true,
-                lastSeen: Date.now(),
-                isAdmin: userRole === 'admin',
-                userId: currentUser?.id
-            };
-            sessionStorage.setItem('onlineUsers', JSON.stringify(userData));
-            onlineUsers.set(email, { online: true, isAdmin: userRole === 'admin', userId: currentUser?.id });
+        function createPendingMessage(content, file) {
+            const messagesArea = document.getElementById('messagesArea');
+            if (!messagesArea) return null;
+            if (messagesArea.querySelector('.empty-state')) {
+                messagesArea.innerHTML = '';
+            }
 
-            // Start a heartbeat to keep current user marked as online
+            const pendingId = `pending-${Date.now()}`;
+            const avatar = generateAvatar(currentUser.profile?.username || currentUser.email);
+            const fileName = file?.name ? escapeHtml(file.name) : '';
+            const attachmentNote = file ? `<div class="message-attachment">Uploading ${fileName}...<div class="upload-bar"></div></div>` : '';
+            const contentHtml = content ? `<div class="message-text">${escapeHtml(content)}</div>` : '';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'message pending-message';
+            wrapper.setAttribute('data-pending-id', pendingId);
+            wrapper.innerHTML = `
+                <div class="message-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
+                <div class="message-content">
+                    <div class="message-header" style="display:flex;align-items:center;gap:8px;">
+                        <span class="message-author">${escapeHtml(currentUser.profile?.username || currentUser.email)}</span>
+                        <span class="message-time">Sending...</span>
+                    </div>
+                    ${contentHtml}
+                    ${attachmentNote}
+                </div>
+            `;
+            messagesArea.appendChild(wrapper);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+            return pendingId;
+        }
+
+        function removePendingMessage(pendingId) {
+            if (!pendingId) return;
+            const node = document.querySelector(`[data-pending-id='${pendingId}']`);
+            if (node) node.remove();
+        }
+
+        function markPendingFailed(pendingId, reason) {
+            if (!pendingId) return;
+            const node = document.querySelector(`[data-pending-id='${pendingId}']`);
+            if (!node) return;
+            const time = node.querySelector('.message-time');
+            if (time) time.textContent = 'Failed';
+            const attachment = node.querySelector('.message-attachment');
+            if (attachment) {
+                attachment.innerHTML = `${escapeHtml(reason || 'Failed')}`;
+            }
+        }
+
+        // ONLINE/OFFLINE STATUS SYSTEM (Supabase-backed)
+        async function setPresence(isOnline, emailOverride) {
+            if (!currentUser) return;
+            const email = emailOverride || currentUser.email;
+            const username = currentUser.profile?.username || email;
+            const payload = {
+                user_id: currentUser.id,
+                email: email,
+                username: username,
+                is_online: isOnline,
+                last_seen: new Date().toISOString()
+            };
+
+            try {
+                const { error } = await supabase
+                    .from(PRESENCE_TABLE)
+                    .upsert(payload, { onConflict: 'user_id' });
+
+                if (error) console.error('Presence update error:', error);
+            } catch (err) {
+                console.error('Presence update exception:', err);
+            }
+        }
+
+        async function markUserOnline(emailOverride) {
+            await setPresence(true, emailOverride);
+
             if (currentUser && !window.memberHeartbeatInterval) {
                 window.memberHeartbeatInterval = setInterval(() => {
-                    try {
-                        const ud = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
-                        ud[email] = ud[email] || {};
-                        ud[email].lastSeen = Date.now();
-                        ud[email].isAdmin = userRole === 'admin';
-                        ud[email].userId = currentUser?.id;
-                        sessionStorage.setItem('onlineUsers', JSON.stringify(ud));
-                        onlineUsers.set(email, { online: true, isAdmin: userRole === 'admin', userId: currentUser?.id });
-                    } catch (e) {
-                        console.error('Heartbeat error:', e);
-                    }
-                }, 15000); // update every 15s
+                    setPresence(true, emailOverride);
+                }, PRESENCE_HEARTBEAT_MS);
 
-                // On unload remove the current user's entry so others see them offline
-                window.addEventListener('beforeunload', () => {
-                    try {
-                        const ud = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
-                        delete ud[email];
-                        sessionStorage.setItem('onlineUsers', JSON.stringify(ud));
-                    } catch (e) {}
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        setPresence(false, emailOverride);
+                    } else {
+                        setPresence(true, emailOverride);
+                    }
+                });
+
+                window.addEventListener('pagehide', () => {
+                    setPresence(false, emailOverride);
                 });
             }
         }
 
         function getOnlineUsers() {
-            const userData = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
             const now = Date.now();
             const onlineList = [];
-            
-            // Consider users online if seen in the last 5 minutes
-            Object.keys(userData).forEach(email => {
-                if (now - userData[email].lastSeen < 5 * 60 * 1000) {
-                    onlineList.push(email);
+            presenceCache.forEach((entry) => {
+                const lastSeen = entry?.last_seen ? Date.parse(entry.last_seen) : 0;
+                if (entry?.is_online && lastSeen && (now - lastSeen < ONLINE_THRESHOLD_MS)) {
+                    onlineList.push(entry.email);
                 }
             });
             return onlineList;
         }
 
-        function startMemberListUpdates() {
+                function setMemberListStatus(text, isError) {
+            const el = document.getElementById('memberListStatus');
+            if (!el) return;
+            el.textContent = text;
+            if (isError) el.classList.add('error');
+            else el.classList.remove('error');
+        }
+
+        function formatTime(ts) {
+            const d = new Date(ts);
+            return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+function startMemberListUpdates() {
             updateMemberList();
-            memberListInterval = setInterval(updateMemberList, 2000);
+            memberListInterval = setInterval(updateMemberList, 1500); // Update every 1.5 seconds
         }
 
         async function updateMemberList() {
+            setMemberListStatus('Refreshing...', false);
             const memberListEl = document.getElementById('memberList');
             try {
                 // Load all profiles so we show everyone (online or offline)
-                const { data: profiles } = await supabase.from('profiles').select('id, username');
+                const { data: profiles } = await supabase.from('profiles').select('id, username, email');
 
                 if (!profiles || profiles.length === 0) {
                     memberListEl.innerHTML = '<div style="padding: 16px; color: #72767d; font-size: 12px;">No users found</div>';
                     return;
                 }
 
-                // Fetch tags and roles in bulk to avoid per-user queries
-                const [{ data: allTags }, { data: allRoles }] = await Promise.all([
+                // Fetch tags, roles, and presence in bulk to avoid per-user queries
+                const [{ data: allTags }, { data: allRoles }, { data: presenceRows }] = await Promise.all([
                     supabase.from('user_tags').select('*'),
-                    supabase.from('user_roles').select('user_id, role')
+                    supabase.from('user_roles').select('user_id, role'),
+                    supabase.from(PRESENCE_TABLE).select('user_id, email, username, is_online, last_seen')
                 ]);
 
                 const tagMap = new Map();
@@ -1555,27 +2121,27 @@
                 const roleMap = new Map();
                 allRoles?.forEach(r => roleMap.set(r.user_id, r.role));
 
-                // Build a map from userId -> session info from sessionStorage
-                const stored = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
-                const userIdToSession = new Map();
-                Object.keys(stored).forEach(email => {
-                    const entry = stored[email];
-                    if (entry && entry.userId) userIdToSession.set(entry.userId, { email, lastSeen: entry.lastSeen, isAdmin: entry.isAdmin });
+                presenceCache = new Map();
+                presenceRows?.forEach(row => {
+                    presenceCache.set(row.user_id, row);
                 });
 
                 const now = Date.now();
-                const onlineThreshold = 2 * 60 * 1000; // 2 minutes
 
                 const html = profiles.map(profile => {
                     const pid = profile.id;
-                    const username = profile.username || profile.id;
+                    const username = profile.username || profile.email || profile.id;
                     const avatar = generateAvatar(username);
-                    const session = userIdToSession.get(pid);
-                    const isOnline = session && (now - session.lastSeen < onlineThreshold);
+                    const presence = presenceCache.get(pid);
+                    const lastSeen = presence?.last_seen ? Date.parse(presence.last_seen) : 0;
+                    let isOnline = presence?.is_online && lastSeen && (now - lastSeen < ONLINE_THRESHOLD_MS);
+                    if (!isOnline && currentUser && currentUser.id === pid) {
+                        isOnline = true;
+                    }
                     const statusClass = isOnline ? 'online' : 'offline';
                     const role = roleMap.get(pid) || 'user';
                     const isAdmin = role === 'admin';
-                    const adminHTML = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">👑</span>' : '';
+                    const adminHTML = isAdmin ? ' <span style="color: #f04747; font-weight: 600;">&#128081;</span>' : '';
                     const tag = tagMap.get(pid);
                     let tagHTML = '';
                     if (tag) {
@@ -1583,9 +2149,10 @@
                         tagHTML = `<span style="background: ${tagColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px;">${escapeHtml(tag.tag_text)}</span>`;
                     }
                     const you = (currentUser && currentUser.id === pid) ? ' <span style="color: #72767d; font-size: 12px;">(you)</span>' : '';
+                    const titleEmail = presence?.email || profile.email || 'Unknown';
 
                     return `
-                        <div class="member-item" title="${session?.email || 'Unknown'}" data-user-id="${pid}" onclick="showMemberCard(event, '${pid}')">
+                        <div class="member-item" title="${titleEmail}" data-user-id="${pid}" onclick="showMemberCard(event, '${pid}')">
                             <div class="member-avatar" style="background-color: ${avatar.color}">${avatar.letter}</div>
                             <div class="member-name">
                                 ${escapeHtml(username)}
@@ -1599,12 +2166,14 @@
                 }).join('');
 
                 memberListEl.innerHTML = html;
+                setMemberListStatus('Refreshed ' + formatTime(Date.now()), false);
             } catch (error) {
+                setMemberListStatus('Refresh failed', true);
+                
                 console.error('Error updating member list:', error);
                 memberListEl.innerHTML = '<div style="padding: 16px; color: #72767d; font-size: 12px;">Unable to load members</div>';
             }
-        }
-        function generateAvatar(username) {
+        }        function generateAvatar(username) {
             const letter = (username || 'U')[0].toUpperCase();
             const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#feca57', '#ff9ff3', '#56ab2f', '#ff6b6b'];
             let hash = 0;
@@ -1625,6 +2194,535 @@
             div.textContent = text;
             return div.innerHTML;
         }
+        async function loadProfilesCache() {
+            const { data } = await supabase.from('profiles').select('id, username, email');
+            profilesCache = data || [];
+            usernameToProfile = new Map();
+            profilesCache.forEach(p => {
+                if (p.username) usernameToProfile.set(p.username.toLowerCase(), p);
+                if (p.email) usernameToProfile.set(p.email.toLowerCase(), p);
+            });
+        }
+
+        function findMentions(text) {
+            const matches = (text.match(/@([a-zA-Z0-9_\-\.]+)/g) || []).map(m => m.slice(1).toLowerCase());
+            const users = [];
+            matches.forEach(name => {
+                const p = usernameToProfile.get(name);
+                if (p && p.id !== currentUser.id) users.push(p);
+            });
+            return users;
+        }
+
+        function isMentioned(text) {
+            const me = (currentUser.profile?.username || currentUser.email || '').toLowerCase();
+            if (!me) return false;
+            return new RegExp(`@${me.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}`, 'i').test(text);
+        }
+
+        async function createNotificationsForMessage(message) {
+            if (!message) return;
+            const mentions = findMentions(message.content || '');
+            const notifications = [];
+
+            mentions.forEach(u => {
+                notifications.push({
+                    user_id: u.id,
+                    type: 'mention',
+                    message_id: message.id,
+                    channel: message.channel,
+                    from_user: message.username
+                });
+            });
+
+            if (message.reply_to_user_id && message.reply_to_user_id !== currentUser.id) {
+                notifications.push({
+                    user_id: message.reply_to_user_id,
+                    type: 'reply',
+                    message_id: message.id,
+                    channel: message.channel,
+                    from_user: message.username
+                });
+            }
+
+            if (notifications.length) {
+                await supabase.from('notifications').insert(notifications);
+            }
+        }
+
+        async function loadNotifications() {
+            if (!currentUser) return [];
+            const { data } = await supabase
+                .from('notifications')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('created_at', { ascending: false })
+                .limit(20);
+            return data || [];
+        }
+
+        function renderNotifications(items) {
+            const panel = document.getElementById('notifPanel');
+            const badge = document.getElementById('notifBadge');
+            if (!panel || !badge) return;
+            const unread = (items || []).filter(n => !n.read_at);
+            badge.textContent = unread.length;
+            badge.classList.toggle('hidden', unread.length === 0);
+
+            if (!items || items.length === 0) {
+                panel.innerHTML = '<div class="notif-item">No notifications yet.</div>';
+                return;
+            }
+
+            panel.innerHTML = items.map(n => {
+                const label = n.type === 'reply'
+                    ? `${escapeHtml(n.from_user || 'Someone')} replied in ${escapeHtml(n.channel || '')}`
+                    : `${escapeHtml(n.from_user || 'Someone')} mentioned you in ${escapeHtml(n.channel || '')}`;
+                return `<div class="notif-item">${label}</div>`;
+            }).join('');
+        }
+        function subscribeNotifications() {
+            if (notificationsUnsubscribe) notificationsUnsubscribe.unsubscribe();
+            notificationsUnsubscribe = supabase
+                .channel(`notifications:${currentUser.id}`)
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'notifications',
+                    filter: `user_id=eq.${currentUser.id}`
+                }, async () => {
+                    const items = await loadNotifications();
+                    renderNotifications(items);
+                })
+                .subscribe();
+        }
+
+        async function toggleNotifications() {
+            const panel = document.getElementById('notifPanel');
+            if (!panel) return;
+            panel.classList.toggle('hidden');
+            if (!panel.classList.contains('hidden')) {
+                const items = await loadNotifications();
+                renderNotifications(items);
+                // mark as read
+                const ids = items.filter(n => !n.read_at).map(n => n.id);
+                if (ids.length) {
+                    await supabase.from('notifications').update({ read_at: new Date().toISOString() }).in('id', ids);
+                }
+            }
+        }
+
+        function setReply(message) {
+            currentReplyTo = message;
+            const preview = document.getElementById('replyPreview');
+            if (!preview) return;
+            preview.innerHTML = `Replying to <strong>${escapeHtml(message.username)}</strong> <button onclick="clearReply()">&times;</button>`;
+            preview.classList.remove('hidden');
+        }
+        function setReplyFromMessage(messageId) {
+            const msg = messageIndex.get(String(messageId));
+            if (msg) setReply(msg);
+        }
+
+        function clearReply() {
+            currentReplyTo = null;
+            const preview = document.getElementById('replyPreview');
+            if (!preview) return;
+            preview.classList.add('hidden');
+            preview.innerHTML = '';
+        }
+
+        function triggerFileUpload() {
+            const input = document.getElementById('fileInput');
+            if (input) input.click();
+        }
+
+        async function setAttachmentDraft(file) {
+            const preview = document.getElementById('attachmentPreview');
+            if (!preview) return;
+
+            attachmentOriginalName = null;
+            const isVideo = file.type.startsWith('video/');
+
+            if (ENABLE_CLIENT_TRANSCODE && isVideo && !canPlayVideo(file.name) && !ffmpegDisabled && file.size <= MAX_TRANSCODE_BYTES) {
+                attachmentConverting = true;
+                preview.innerHTML = `Converting video for playback... <strong>${escapeHtml(file.name)}</strong>`;
+                preview.classList.remove('hidden');
+                try {
+                    const converted = await transcodeToMp4(file);
+                    attachmentDraft = converted;
+                    attachmentOriginalName = file.name;
+                    renderAttachmentPreview(converted, preview);
+                } catch (err) {
+                    console.error('Video convert failed:', err);
+                    attachmentDraft = file;
+                    renderAttachmentPreview(file, preview);
+                    const note = document.createElement('div');
+                    note.className = 'attachment-note';
+                    note.textContent = 'Conversion failed. Uploading original file; playback may not work in-browser.';
+                    preview.appendChild(note);
+                } finally {
+                    attachmentConverting = false;
+                }
+                return;
+            }
+
+            attachmentDraft = file;
+            renderAttachmentPreview(file, preview);
+            if (isVideo && !canPlayVideo(file.name)) {
+                const note = document.createElement('div');
+                note.className = 'attachment-note';
+                note.textContent = file.size > MAX_TRANSCODE_BYTES
+                    ? 'File too large to convert in browser. Uploading original file.'
+                    : 'Video may not play in-browser; convert to MP4 for best results.';
+                preview.appendChild(note);
+            }
+        }
+
+        function renderAttachmentPreview(file, preview) {
+            const isImage = file.type.startsWith('image/');
+            const isVideo = file.type.startsWith('video/');
+            let media = '';
+            if (isImage) {
+                const url = URL.createObjectURL(file);
+                media = `<img src="${url}" alt="${escapeHtml(file.name)}">`;
+            } else if (isVideo) {
+                const url = URL.createObjectURL(file);
+                media = `<video src="${url}" controls muted></video>`;
+            }
+            const nameNote = attachmentOriginalName ? ` (from ${escapeHtml(attachmentOriginalName)})` : '';
+            preview.innerHTML = `Attachment: <strong>${escapeHtml(file.name)}</strong>${nameNote} ${media} <button onclick="clearAttachmentDraft()">&times;</button>`;
+            preview.classList.remove('hidden');
+        }
+
+        function clearAttachmentDraft() {
+            attachmentDraft = null;
+            attachmentOriginalName = null;
+            attachmentConverting = false;
+            const preview = document.getElementById('attachmentPreview');
+            if (!preview) return;
+            preview.classList.add('hidden');
+            preview.innerHTML = '';
+        }
+
+        async function uploadAttachmentDraft() {
+            if (!attachmentDraft) return null;
+            const file = attachmentDraft;
+            const path = `${currentUser.id}/${Date.now()}_${file.name}`;
+            const type = file.type.startsWith('image/') ? 'image' : (file.type.startsWith('video/') ? 'video' : 'file');
+            const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(path, file, {
+                contentType: file.type || undefined
+            });
+            if (error) {
+                alert('Upload failed: ' + error.message);
+                return null;
+            }
+            return {
+                attachment_url: path,
+                attachment_type: type,
+                attachment_name: file.name
+            };
+        }
+
+        async function resolveAttachmentUrl(value, ownerId) {
+            if (!value) return null;
+            if (value.startsWith('http')) return value;
+            const { data, error } = await supabase.storage.from(STORAGE_BUCKET).createSignedUrl(value, 3600);
+            if (!error && data?.signedUrl) return data.signedUrl;
+
+            // Fallback: try owner folder when only a filename was stored
+            if (ownerId) {
+                const fallbackPath = `${ownerId}/${value}`;
+                const { data: fbData, error: fbError } = await supabase.storage
+                    .from(STORAGE_BUCKET)
+                    .createSignedUrl(fallbackPath, 3600);
+                if (!fbError && fbData?.signedUrl) return fbData.signedUrl;
+
+                // Try to discover the file in the owner's folder
+                const { data: listData } = await supabase.storage
+                    .from(STORAGE_BUCKET)
+                    .list(ownerId, { limit: 200, search: value });
+                const match = (listData || []).find(item => item.name === value || item.name.endsWith(value));
+                if (match) {
+                    const { data: listUrl } = await supabase.storage
+                        .from(STORAGE_BUCKET)
+                        .createSignedUrl(`${ownerId}/${match.name}`, 3600);
+                    if (listUrl?.signedUrl) return listUrl.signedUrl;
+                }
+            }
+
+            return null;
+        }
+
+        async function refreshAttachmentForMessage(messageId, attachmentUrl, attachmentType, attachmentName, ownerId) {
+            const resolved = await resolveAttachmentUrl(attachmentUrl, ownerId);
+            const container = document.querySelector(`[data-attachment-for='${String(messageId)}']`);
+            if (!container || !resolved) return;
+
+            if (attachmentType === 'image' || isImageExt(attachmentName)) {
+                container.classList.remove('uploading');
+                container.innerHTML = `<img src="${resolved}" alt="${escapeHtml(attachmentName || 'image')}">`;
+            } else if (attachmentType === 'video' || isVideoExt(attachmentName)) {
+                const canPlay = canPlayVideo(attachmentName);
+                container.classList.remove('uploading');
+                if (canPlay) {
+                    const typeAttr = getVideoMime(attachmentName);
+                    container.innerHTML = `<video controls playsinline preload="metadata"><source src="${resolved}"${typeAttr}></video>`;
+                } else {
+                    container.innerHTML = `<a href="${resolved}" target="_blank">${escapeHtml(attachmentName || 'video')}</a><div class="attachment-note">This video format may not play in your browser. Download to view.</div>`;
+                }
+            } else {
+                container.classList.remove('uploading');
+                container.innerHTML = `<a href="${resolved}" target="_blank">${escapeHtml(attachmentName || 'file')}</a>`;
+            }
+        }
+
+        function isImageExt(name) {
+            if (!name) return false;
+            return /\.(png|jpe?g|gif|webp|bmp|tiff?)$/i.test(name);
+        }
+
+        function isVideoExt(name) {
+            if (!name) return false;
+            return /\.(mp4|mov|webm|ogg|m4v|avi|mkv)$/i.test(name);
+        }
+
+        function getVideoMime(name) {
+            if (!name) return '';
+            if (/\.mp4$/i.test(name)) return ' type="video/mp4"';
+            if (/\.webm$/i.test(name)) return ' type="video/webm"';
+            if (/\.ogg$/i.test(name)) return ' type="video/ogg"';
+            if (/\.mov$/i.test(name)) return ' type="video/quicktime"';
+            if (/\.m4v$/i.test(name)) return ' type="video/mp4"';
+            if (/\.avi$/i.test(name)) return ' type="video/x-msvideo"';
+            if (/\.mkv$/i.test(name)) return ' type="video/x-matroska"';
+            return '';
+        }
+
+        function canPlayVideo(name) {
+            const typeAttr = getVideoMime(name).replace(' type="', '').replace('"', '');
+            if (!typeAttr) return true;
+            const video = document.createElement('video');
+            const verdict = video.canPlayType(typeAttr);
+            return verdict === 'probably' || verdict === 'maybe';
+        }
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.async = true;
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+
+        async function ensureFfmpeg() {
+            if (ffmpegDisabled) throw new Error('ffmpeg disabled');
+            if (ffmpegLoaded && ffmpegInstance) return ffmpegInstance;
+            if (!window.FFmpeg) {
+                try {
+                    await loadScript('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js');
+                } catch (err) {
+                    ffmpegDisabled = true;
+                    throw err;
+                }
+            }
+            const { createFFmpeg, fetchFile } = FFmpeg;
+            ffmpegFetchFile = fetchFile;
+            try {
+                ffmpegInstance = createFFmpeg({
+                    log: false,
+                    corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js'
+                });
+                await ffmpegInstance.load();
+            } catch (err) {
+                ffmpegDisabled = true;
+                throw err;
+            }
+            ffmpegLoaded = true;
+            return ffmpegInstance;
+        }
+
+        async function transcodeToMp4(file) {
+            const ffmpeg = await ensureFfmpeg();
+            const inputName = `input_${Date.now()}`;
+            const outputName = 'output.mp4';
+            ffmpeg.FS('writeFile', inputName, await ffmpegFetchFile(file));
+            await ffmpeg.run('-i', inputName, '-c:v', 'libx264', '-c:a', 'aac', '-movflags', 'faststart', outputName);
+            const data = ffmpeg.FS('readFile', outputName);
+            ffmpeg.FS('unlink', inputName);
+            ffmpeg.FS('unlink', outputName);
+            return new File([data.buffer], file.name.replace(/\.[^/.]+$/, '') + '.mp4', { type: 'video/mp4' });
+        }
+
+        function isUuid(value) {
+            if (!value) return false;
+            return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value));
+        }
+
+        async function addReaction(messageId, emoji) {
+            const messageIdValue = Number(messageId);
+            const messageKey = Number.isNaN(messageIdValue) ? messageId : messageIdValue;
+            const key = String(messageId);
+            const mine = myReactions.get(key) || new Set();
+            const alreadyReacted = mine.has(emoji);
+
+            // Optimistic UI update
+            const actions = document.querySelector(`[data-reactions-for='${String(messageId)}']`);
+            if (actions) {
+                const btn = actions.querySelector(`.reaction-pill[data-message-id='${String(messageId)}'][data-emoji='${emoji}']`);
+                if (btn) {
+                    const parts = btn.textContent.trim().split(' ');
+                    const currentCount = parseInt(parts[1] || '0', 10) || 0;
+                    const nextCount = Math.max(0, alreadyReacted ? currentCount - 1 : currentCount + 1);
+                    btn.textContent = `${emoji} ${nextCount}`;
+                    btn.classList.toggle('reacted', !alreadyReacted);
+                }
+            }
+
+            let error;
+            if (alreadyReacted) {
+                const res = await supabase
+                    .from('message_reactions')
+                    .delete()
+                    .match({ message_id: messageKey, user_id: currentUser.id, emoji });
+                error = res.error;
+            } else {
+                const res = await supabase.from('message_reactions').insert({
+                    message_id: messageKey,
+                    user_id: currentUser.id,
+                    emoji: emoji
+                });
+                error = res.error;
+            }
+
+            if (error) {
+                console.error('Reaction error:', error);
+                // revert optimistic update if needed
+                await refreshReactions();
+                return;
+            }
+
+            // Update local reacted state
+            if (alreadyReacted) {
+                mine.delete(emoji);
+            } else {
+                mine.add(emoji);
+            }
+            myReactions.set(key, mine);
+
+            // Refresh reactions for this message
+            const reactionsMap = await fetchReactions([messageKey]);
+            if (actions) {
+                actions.innerHTML = renderReactions(String(messageId), reactionsMap, myReactions);
+            }
+        }
+
+        async function fetchReactions(messageIds) {
+            if (!messageIds.length) return new Map();
+            const { data } = await supabase
+                .from('message_reactions')
+                .select('message_id, emoji, user_id')
+                .in('message_id', messageIds);
+
+            const map = new Map();
+            (data || []).forEach(r => {
+                const key = `${r.message_id}:${r.emoji}`;
+                map.set(key, (map.get(key) || 0) + 1);
+            });
+            return map;
+        }
+
+        async function fetchMyReactions(messageIds) {
+            if (!messageIds.length) return new Map();
+            const { data } = await supabase
+                .from('message_reactions')
+                .select('message_id, emoji')
+                .eq('user_id', currentUser.id)
+                .in('message_id', messageIds);
+            const map = new Map();
+            (data || []).forEach(r => {
+                const key = String(r.message_id);
+                if (!map.has(key)) map.set(key, new Set());
+                map.get(key).add(r.emoji);
+            });
+            return map;
+        }
+
+        function renderReactions(messageId, reactionsMap, myReactionsMap) {
+            const emojis = ['\u{1F44D}', '\u2764\uFE0F', '\u{1F602}'];
+            const mine = myReactionsMap?.get(String(messageId)) || new Set();
+            const pills = emojis.map(e => {
+                const count = reactionsMap.get(`${messageId}:${e}`) || 0;
+                const reactedClass = mine.has(e) ? ' reacted' : '';
+                return `<button class="reaction-pill${reactedClass}" data-message-id="${messageId}" data-emoji="${e}">${e} ${count}</button>`;
+            }).join('');
+            return pills;
+        }
+
+        function setupTypingChannel() {
+            if (typingChannel) typingChannel.unsubscribe();
+            typingChannel = supabase
+                .channel(`typing:${currentChannel}`)
+                .on('broadcast', { event: 'typing' }, ({ payload }) => {
+                    if (!payload || payload.user_id === currentUser.id) return;
+                    const indicator = document.getElementById('typingIndicator');
+                    if (!indicator) return;
+                    indicator.textContent = `${payload.username} is typing...`;
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(() => {
+                        indicator.textContent = '';
+                    }, 3000);
+                })
+                .subscribe();
+        }
+
+        async function refreshReactions() {
+            const nodes = Array.from(document.querySelectorAll('[data-reactions-for]'));
+            const ids = nodes
+                .map(n => n.getAttribute('data-reactions-for'))
+                .filter(Boolean)
+                .map(id => {
+                    const n = Number(id);
+                    return Number.isNaN(n) ? id : n;
+                });
+            if (!ids.length) return;
+            const [reactionsMap, myReactionsMap] = await Promise.all([
+                fetchReactions(ids),
+                fetchMyReactions(ids)
+            ]);
+            myReactions = myReactionsMap;
+            nodes.forEach(n => {
+                const id = n.getAttribute('data-reactions-for');
+                n.innerHTML = renderReactions(id, reactionsMap, myReactions);
+            });
+        }
+
+        function setupReactionsChannel() {
+            if (reactionsChannel) reactionsChannel.unsubscribe();
+            reactionsChannel = supabase
+                .channel('message_reactions')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'message_reactions' }, () => {
+                    refreshReactions();
+                })
+                .subscribe();
+        }
+
+        function sendTyping() {
+            if (typingCooldown || !typingChannel) return;
+            typingCooldown = true;
+            setTimeout(() => (typingCooldown = false), 1200);
+            typingChannel.send({
+                type: 'broadcast',
+                event: 'typing',
+                payload: {
+                    user_id: currentUser.id,
+                    username: currentUser.profile?.username || currentUser.email
+                }
+            });
+        }
 
         // Show a small member profile card next to the clicked member
         async function showMemberCard(event, userId) {
@@ -1641,23 +2739,21 @@
 
                 const username = profile?.username || userId;
                 const role = roleRes?.role || 'user';
-                const roleHTML = role === 'admin' ? '<div class="mc-row"><strong>Role:</strong> <span style="color:#f04747;">👑 Admin</span></div>' : '';
+                const roleHTML = role === 'admin' ? '<div class="mc-row"><strong>Role:</strong> <span style="color:#f04747;">&#128081; Admin</span></div>' : '';
                 const tagHTML = tagRes ? `<div class="mc-row"><strong>Tag:</strong> <span style="background:rgb(${tagRes.tag_color_r},${tagRes.tag_color_g},${tagRes.tag_color_b});color:white;padding:2px 6px;border-radius:3px;font-size:11px;">${escapeHtml(tagRes.tag_text)}</span></div>` : '';
 
-                // Use profile email directly if available, otherwise use sessionStorage lookup
+                // Get online status from presence cache
                 let email = profile?.email || 'Unknown';
                 let status = 'Offline';
-                
-                // Only use sessionStorage lookup if profile doesn't have email
-                if (!profile?.email) {
-                    const stored = JSON.parse(sessionStorage.getItem('onlineUsers') || '{}');
-                    Object.keys(stored).forEach(e => {
-                        const entry = stored[e];
-                        if (entry && entry.userId === userId) {
-                            email = e;
-                            status = (Date.now() - entry.lastSeen < 2 * 60 * 1000) ? 'Online' : 'Offline';
-                        }
-                    });
+                const presence = presenceCache.get(userId);
+                if (presence) {
+                    email = presence.email || email;
+                    const lastSeen = presence.last_seen ? Date.parse(presence.last_seen) : 0;
+                    status = (presence.is_online && lastSeen && (Date.now() - lastSeen < ONLINE_THRESHOLD_MS)) ? 'Online' : 'Offline';
+                }
+
+                if (currentUser && currentUser.id === userId) {
+                    status = 'Online';
                 }
 
                 const avatar = generateAvatar(username);
@@ -1729,9 +2825,12 @@
 
         function setupAutoResize() {
             const textarea = document.getElementById('messageInput');
+            const fileInput = document.getElementById('fileInput');
+
             textarea.addEventListener('input', () => {
                 textarea.style.height = 'auto';
                 textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+                sendTyping();
             });
 
             textarea.addEventListener('keydown', (e) => {
@@ -1740,6 +2839,14 @@
                     sendMessage();
                 }
             });
+
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) setAttachmentDraft(file);
+                    fileInput.value = '';
+                });
+            }
         }
 
         // Add Enter key support to login and signup forms
@@ -1770,6 +2877,25 @@
             const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
             if (savedSettings.theme) {
                 applyTheme(savedSettings.theme);
+            }
+
+            const messagesArea = document.getElementById('messagesArea');
+            if (messagesArea) {
+                messagesArea.addEventListener('click', (e) => {
+                    const replyBtn = e.target.closest('.reply-btn');
+                    if (replyBtn) {
+                        const id = replyBtn.getAttribute('data-reply-id');
+                        if (id) setReplyFromMessage(id);
+                        return;
+                    }
+
+                    const reactionBtn = e.target.closest('.reaction-pill');
+                    if (reactionBtn) {
+                        const id = reactionBtn.getAttribute('data-message-id');
+                        const emoji = reactionBtn.getAttribute('data-emoji');
+                        if (id && emoji) addReaction(id, emoji);
+                    }
+                });
             }
         });
 
@@ -1813,6 +2939,13 @@
         async function logout(event) {
             if (event) event.stopPropagation();
             if (memberListInterval) clearInterval(memberListInterval);
+            if (window.memberHeartbeatInterval) clearInterval(window.memberHeartbeatInterval);
+            
+            // Mark current user as offline
+            if (currentUser) {
+                await setPresence(false);
+            }
+
             await supabase.auth.signOut();
             currentUser = null;
             currentServer = 'home';
@@ -1880,7 +3013,7 @@
             // Update admin badge
             const settingsAdminBadge = document.getElementById('settingsAdminBadge');
             if (userRole === 'admin') {
-                settingsAdminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">👑 ADMIN</span>';
+                settingsAdminBadge.innerHTML = '<span style="background: #f04747; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">&#128081; ADMIN</span>';
             } else {
                 settingsAdminBadge.innerHTML = '';
             }
@@ -1901,6 +3034,7 @@
                     settingsUserTag.innerHTML = '';
                 }
             } catch (error) {
+                
                 console.log('No tag found for user');
             }
             
@@ -1911,260 +3045,277 @@
             document.getElementById('userSettingsModal').classList.add('active');
         }
 
-function closeUserSettings() {
-    document.getElementById('userSettingsModal').classList.remove('active');
-}
+        function closeUserSettings() {
+            document.getElementById('userSettingsModal').classList.remove('active');
+        }
 
-function loadUserSettings() {
-    // Load settings from localStorage
-    const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
-    
-    document.getElementById('settingsDisplayName').value = savedSettings.displayName || '';
-    document.getElementById('settingsDescription').value = savedSettings.description || '';
-    document.getElementById('settingsStatusMessage').value = savedSettings.statusMessage || '';
-    document.getElementById('settingsTheme').value = savedSettings.theme || 'dark';
-    document.getElementById('settingsNotifications').checked = savedSettings.notifications !== false;
-    
-    // Apply theme immediately after loading settings
-    applyTheme(savedSettings.theme || 'dark');
-}
+        function loadUserSettings() {
+            // Load settings from localStorage
+            const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+            
+            document.getElementById('settingsDisplayName').value = savedSettings.displayName || '';
+            document.getElementById('settingsDescription').value = savedSettings.description || '';
+            document.getElementById('settingsStatusMessage').value = savedSettings.statusMessage || '';
+            document.getElementById('settingsTheme').value = savedSettings.theme || 'dark';
+            document.getElementById('settingsNotifications').checked = savedSettings.notifications !== false;
+            
+            // Apply theme immediately after loading settings
+            applyTheme(savedSettings.theme || 'dark');
+        }
 
-function applyTheme(theme) {
-    // Don't apply theme to messages if settings modal is open
-    const isSettingsModalOpen = document.getElementById('userSettingsModal').classList.contains('active');
-    
-    if (theme === 'light') {
-        // Light theme colors
-        const lightColors = {
-            body: '#ffffff',
-            text: '#000000',
-            sidebar: '#f8f9fa',
-            sidebarText: '#000000',
-            mainContent: '#ffffff',
-            input: '#e9ecef',
-            inputText: '#000000',
-            inputBorder: '#ced4da',
-            modal: '#ffffff',
-            modalText: '#000000',
-            authBox: '#ffffff',
-            authGradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-            guildBar: '#e9ecef',
-            userPanel: '#f8f9fa',
-            borderColor: '#ced4da',
-            guildItem: '#36393f',
-            guildAdd: '#36393f',
-            message: '#f8f9fa',
-            messageText: '#000000',
-            memberCard: '#ffffff',
-            memberCardText: '#000000'
-        };
-        
-        // Apply light theme
-        document.body.style.background = lightColors.body;
-        document.body.style.color = lightColors.text;
-        
-        document.querySelectorAll('.auth-container').forEach(el => {
-            el.style.background = lightColors.authGradient;
-        });
-        document.querySelectorAll('.auth-box').forEach(el => {
-            el.style.background = lightColors.authBox;
-            el.style.color = lightColors.modalText;
-        });
-        document.querySelectorAll('.sidebar, .member-list').forEach(el => {
-            el.style.background = lightColors.sidebar;
-            el.style.color = lightColors.sidebarText;
-        });
-        document.querySelectorAll('.main-content').forEach(el => {
-            el.style.background = lightColors.mainContent;
-        });
-        document.querySelectorAll('.message-input').forEach(el => {
-            el.style.background = lightColors.input;
-            el.style.color = lightColors.inputText;
-            el.style.borderColor = lightColors.inputBorder;
-        });
-        document.querySelectorAll('.modal-content').forEach(el => {
-            el.style.background = lightColors.modal;
-            el.style.color = lightColors.modalText;
-        });
-        document.querySelectorAll('.form-control').forEach(el => {
-            el.style.background = lightColors.input;
-            el.style.color = lightColors.inputText;
-            el.style.borderColor = lightColors.inputBorder;
-        });
-        document.querySelectorAll('.guild-bar').forEach(el => {
-            el.style.background = lightColors.guildBar;
-        });
-        document.querySelectorAll('.user-panel').forEach(el => {
-            el.style.background = lightColors.userPanel;
-        });
-        document.querySelectorAll('.sidebar-header').forEach(el => {
-            el.style.background = lightColors.sidebar;
-            el.style.color = lightColors.sidebarText;
-            el.style.borderBottomColor = lightColors.borderColor;
-        });
-        document.querySelectorAll('.guild-item').forEach(el => {
-            // Don't override inline styles for individual server colors
-            if (!el.style.background || el.style.background === 'rgb(54, 57, 63)' || el.style.background === '#36393f') {
-                el.style.background = '#36393f';
+        function applyTheme(theme) {
+            // Don't apply theme to messages if settings modal is open
+            const isSettingsModalOpen = document.getElementById('userSettingsModal').classList.contains('active');
+            
+            if (theme === 'light') {
+                // Light theme colors
+                const lightColors = {
+                    body: '#ffffff',
+                    text: '#111111',
+                    sidebar: '#f8f9fa',
+                    sidebarText: '#111111',
+                    mainContent: '#ffffff',
+                    input: '#e9ecef',
+                    inputText: '#111111',
+                    inputBorder: '#ced4da',
+                    modal: '#ffffff',
+                    modalText: '#111111',
+                    authBox: '#2f3136',
+                    authGradient: 'linear-gradient(135deg, #6d7bff 0%, #6f5bd4 100%)',
+                    guildBar: '#e9ecef',
+                    userPanel: '#f8f9fa',
+                    borderColor: '#ced4da',
+                    guildItem: '#36393f',
+                    guildAdd: '#36393f',
+                    message: '#f8f9fa',
+                    messageText: '#111111',
+                    memberCard: '#ffffff',
+                    memberCardText: '#111111'
+                };
+                
+                // Apply light theme
+                document.body.style.background = lightColors.body;
+                document.body.style.color = lightColors.text;
+                
+                document.querySelectorAll('.auth-container').forEach(el => {
+                    el.style.background = lightColors.authGradient;
+                });
+                document.querySelectorAll('.auth-box').forEach(el => {
+                    el.style.background = lightColors.authBox;
+                    el.style.color = '#ffffff';
+                });
+                document.querySelectorAll('.sidebar, .member-list').forEach(el => {
+                    el.style.background = lightColors.sidebar;
+                    el.style.color = lightColors.sidebarText;
+                });
+                document.querySelectorAll('.main-content').forEach(el => {
+                    el.style.background = lightColors.mainContent;
+                });
+                document.querySelectorAll('.message-text').forEach(el => {
+                    el.style.color = '#111111';
+                });
+                document.querySelectorAll('.message-input').forEach(el => {
+                    el.style.background = lightColors.input;
+                    el.style.color = lightColors.inputText;
+                    el.style.borderColor = lightColors.inputBorder;
+                });
+                document.querySelectorAll('.modal-content').forEach(el => {
+                    el.style.background = lightColors.modal;
+                    el.style.color = lightColors.modalText;
+                });
+                document.querySelectorAll('.form-control').forEach(el => {
+                    el.style.background = lightColors.input;
+                    el.style.color = lightColors.inputText;
+                    el.style.borderColor = lightColors.inputBorder;
+                });
+                document.querySelectorAll('.guild-bar').forEach(el => {
+                    el.style.background = lightColors.guildBar;
+                });
+                document.querySelectorAll('.user-panel').forEach(el => {
+                    el.style.background = lightColors.userPanel;
+                });
+                document.querySelectorAll('.sidebar-header').forEach(el => {
+                    el.style.background = lightColors.sidebar;
+                    el.style.color = lightColors.sidebarText;
+                    el.style.borderBottomColor = lightColors.borderColor;
+                });
+                document.querySelectorAll('.guild-separator').forEach(el => {
+                    el.style.background = lightColors.borderColor;
+                });
+                document.querySelectorAll('.guild-add').forEach(el => {
+                    el.style.background = lightColors.guildAdd;
+                    el.style.color = '#43b581';
+                });
+                
+                document.querySelectorAll('.member-card').forEach(el => {
+                    el.style.background = lightColors.memberCard;
+                    el.style.color = lightColors.memberCardText;
+                });
+            } else {
+                // Dark theme colors
+                const darkColors = {
+                    body: '#36393f',
+                    text: '#dcddde',
+                    sidebar: '#2f3136',
+                    sidebarText: '#dcddde',
+                    mainContent: '#36393f',
+                    input: '#40444b',
+                    inputText: '#dcddde',
+                    inputBorder: '#202225',
+                    modal: '#36393f',
+                    modalText: '#dcddde',
+                    authBox: '#2f3136',
+                    authGradient: 'linear-gradient(135deg, #6d7bff 0%, #6f5bd4 100%)',
+                    guildBar: '#202225',
+                    userPanel: '#292b2f',
+                    borderColor: '#202225',
+                    guildItem: '#36393f',
+                    guildAdd: '#2f3136',
+                    message: '#40444b',
+                    messageText: '#dcddde',
+                    memberCard: '#36393f',
+                    memberCardText: '#dcddde'
+                };
+                
+                // Apply dark theme
+                document.body.style.background = darkColors.body;
+                document.body.style.color = darkColors.text;
+                
+                document.querySelectorAll('.auth-container').forEach(el => {
+                    el.style.background = darkColors.authGradient;
+                });
+                document.querySelectorAll('.auth-box').forEach(el => {
+                    el.style.background = darkColors.authBox;
+                    el.style.color = darkColors.modalText;
+                });
+                document.querySelectorAll('.sidebar, .member-list').forEach(el => {
+                    el.style.background = darkColors.sidebar;
+                    el.style.color = darkColors.sidebarText;
+                });
+                document.querySelectorAll('.main-content').forEach(el => {
+                    el.style.background = darkColors.mainContent;
+                });
+                document.querySelectorAll('.message-text').forEach(el => {
+                    el.style.color = '#dcddde';
+                });
+                document.querySelectorAll('.message-input').forEach(el => {
+                    el.style.background = darkColors.input;
+                    el.style.color = darkColors.inputText;
+                    el.style.borderColor = darkColors.inputBorder;
+                });
+                document.querySelectorAll('.modal-content').forEach(el => {
+                    el.style.background = darkColors.modal;
+                    el.style.color = darkColors.modalText;
+                });
+                document.querySelectorAll('.form-control').forEach(el => {
+                    el.style.background = darkColors.input;
+                    el.style.color = darkColors.inputText;
+                    el.style.borderColor = darkColors.inputBorder;
+                });
+                document.querySelectorAll('.guild-bar').forEach(el => {
+                    el.style.background = darkColors.guildBar;
+                });
+                document.querySelectorAll('.user-panel').forEach(el => {
+                    el.style.background = darkColors.userPanel;
+                });
+                document.querySelectorAll('.sidebar-header').forEach(el => {
+                    el.style.background = darkColors.sidebar;
+                    el.style.color = darkColors.sidebarText;
+                    el.style.borderBottomColor = darkColors.borderColor;
+                });
+                document.querySelectorAll('.guild-separator').forEach(el => {
+                    el.style.background = darkColors.borderColor;
+                });
+                document.querySelectorAll('.guild-add').forEach(el => {
+                    el.style.background = darkColors.guildAdd;
+                    el.style.color = '#43b581';
+                });
+                
+                document.querySelectorAll('.member-card').forEach(el => {
+                    el.style.background = darkColors.memberCard;
+                    el.style.color = darkColors.memberCardText;
+                });
             }
-            el.style.color = '#dcddde';
-        });
-        document.querySelectorAll('.guild-item.active').forEach(el => {
-            el.style.background = '#4f545c';
-            el.style.color = '#ffffff';
-        });
-        document.querySelectorAll('.guild-item.home').forEach(el => {
-            el.style.background = 'linear-gradient(135deg, #7289da, #4f545c)';
-            el.style.background = 'linear-gradient(135deg, #5a6eb8, #667eea)';
-        });
-        document.querySelectorAll('.guild-separator').forEach(el => {
-            el.style.background = lightColors.borderColor;
-        });
-        document.querySelectorAll('.guild-add').forEach(el => {
-            el.style.background = lightColors.guildAdd;
-            el.style.color = '#43b581';
-        });
-        
-        // Only apply message styles if settings modal is NOT open
-        if (!isSettingsModalOpen) {
-            document.querySelectorAll('.message').forEach(el => {
-                el.style.background = '';
-                el.style.color = lightColors.messageText;
-            });
         }
-        
-        document.querySelectorAll('.member-card').forEach(el => {
-            el.style.background = lightColors.memberCard;
-            el.style.color = lightColors.memberCardText;
-        });
-    } else {
-        // Dark theme colors
-        const darkColors = {
-            body: '#36393f',
-            text: '#dcddde',
-            sidebar: '#2f3136',
-            sidebarText: '#dcddde',
-            mainContent: '#36393f',
-            input: '#40444b',
-            inputText: '#dcddde',
-            inputBorder: '#202225',
-            modal: '#36393f',
-            modalText: '#dcddde',
-            authBox: '#2f3136',
-            authGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            guildBar: '#202225',
-            userPanel: '#292b2f',
-            borderColor: '#202225',
-            guildItem: '#36393f',
-            guildAdd: '#2f3136',
-            message: '#40444b',
-            messageText: '#dcddde',
-            memberCard: '#36393f',
-            memberCardText: '#dcddde'
-        };
-        
-        // Apply dark theme
-        document.body.style.background = darkColors.body;
-        document.body.style.color = darkColors.text;
-        
-        document.querySelectorAll('.auth-container').forEach(el => {
-            el.style.background = darkColors.authGradient;
-        });
-        document.querySelectorAll('.auth-box').forEach(el => {
-            el.style.background = darkColors.authBox;
-            el.style.color = darkColors.modalText;
-        });
-        document.querySelectorAll('.sidebar, .member-list').forEach(el => {
-            el.style.background = darkColors.sidebar;
-            el.style.color = darkColors.sidebarText;
-        });
-        document.querySelectorAll('.main-content').forEach(el => {
-            el.style.background = darkColors.mainContent;
-        });
-        document.querySelectorAll('.message-input').forEach(el => {
-            el.style.background = darkColors.input;
-            el.style.color = darkColors.inputText;
-            el.style.borderColor = darkColors.inputBorder;
-        });
-        document.querySelectorAll('.modal-content').forEach(el => {
-            el.style.background = darkColors.modal;
-            el.style.color = darkColors.modalText;
-        });
-        document.querySelectorAll('.form-control').forEach(el => {
-            el.style.background = darkColors.input;
-            el.style.color = darkColors.inputText;
-            el.style.borderColor = darkColors.inputBorder;
-        });
-        document.querySelectorAll('.guild-bar').forEach(el => {
-            el.style.background = darkColors.guildBar;
-        });
-        document.querySelectorAll('.user-panel').forEach(el => {
-            el.style.background = darkColors.userPanel;
-        });
-        document.querySelectorAll('.sidebar-header').forEach(el => {
-            el.style.background = darkColors.sidebar;
-            el.style.color = darkColors.sidebarText;
-            el.style.borderBottomColor = darkColors.borderColor;
-        });
-        document.querySelectorAll('.guild-item').forEach(el => {
-            el.style.background = '';
-            el.style.color = '';
-        });
-        document.querySelectorAll('.guild-item.active').forEach(el => {
-            el.style.background = '';
-            el.style.color = '';
-        });
-        document.querySelectorAll('.guild-item.home').forEach(el => {
-            el.style.background = '';
-            el.style.background = 'linear-gradient(135deg, #7289da, #667eea)';
-        });
-        document.querySelectorAll('.guild-separator').forEach(el => {
-            el.style.background = darkColors.borderColor;
-        });
-        document.querySelectorAll('.guild-add').forEach(el => {
-            el.style.background = darkColors.guildAdd;
-            el.style.color = '#43b581';
-        });
-        
-        // Only apply message styles if settings modal is NOT open
-        if (!isSettingsModalOpen) {
-            document.querySelectorAll('.message').forEach(el => {
-                el.style.background = darkColors.message;
-                el.style.color = darkColors.messageText;
-            });
+
+        function saveUserSettings() {
+            // Save settings to localStorage
+            const settings = {
+                displayName: document.getElementById('settingsDisplayName').value,
+                description: document.getElementById('settingsDescription').value,
+                statusMessage: document.getElementById('settingsStatusMessage').value,
+                theme: document.getElementById('settingsTheme').value,
+                notifications: document.getElementById('settingsNotifications').checked
+            };
+            
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+            
+            // Apply theme
+            applyTheme(settings.theme);
+            
+            alert('Settings saved successfully!');
+            closeUserSettings();
         }
-        
-        document.querySelectorAll('.member-card').forEach(el => {
-            el.style.background = darkColors.memberCard;
-            el.style.color = darkColors.memberCardText;
-        });
-    }
-}
 
-function saveUserSettings() {
-    // Save settings to localStorage
-    const settings = {
-        displayName: document.getElementById('settingsDisplayName').value,
-        description: document.getElementById('settingsDescription').value,
-        statusMessage: document.getElementById('settingsStatusMessage').value,
-        theme: document.getElementById('settingsTheme').value,
-        notifications: document.getElementById('settingsNotifications').checked
-    };
-    
-    localStorage.setItem('userSettings', JSON.stringify(settings));
-    
-    // Apply theme
-    applyTheme(settings.theme);
-    
-    alert('Settings saved successfully!');
-    closeUserSettings();
-}
+    </script>
 
-</script>
-
-<!-- Member profile card -->
-<div id="memberCard" class="member-card" aria-hidden="true"></div>
+    <!-- Member profile card -->
+    <div id="memberCard" class="member-card" aria-hidden="true"></div>
 </body>
-    </body>
-    </html>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
